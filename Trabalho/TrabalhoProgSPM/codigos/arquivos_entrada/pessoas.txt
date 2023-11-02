@@ -1,0 +1,149 @@
+João da Silva
+12345678900
+São Paulo
+32
+2
+Furto
+Agressão
+1
+Homicídio
+Maria Oliveira
+98765432100
+Rio de Janeiro
+25
+3
+Drogas
+Roubo
+Agressão
+0
+Carlos Santos
+11122233344
+Belo Horizonte
+40
+1
+Homicídio
+2
+Roubo
+Estelionato
+Laura Rodrigues
+55566677788
+Salvador
+29
+2
+Furto
+Estelionato
+0
+Rafael Pereira
+22233344455
+Brasília
+37
+1
+Tráfico de drogas
+0
+Ana Costa
+99988877766
+Recife
+24
+1
+Agiotagem
+0
+Pedro Ferreira
+77788899911
+Fortaleza
+42
+0
+0
+Aline Sousa
+88877766655
+Porto Alegre
+31
+2
+Roubo
+Furto
+0
+Leandro Oliveira
+33344455566
+Florianópolis
+28
+0
+0
+Mariana Mendes
+77766655544
+Curitiba
+36
+1
+Estupro
+0
+Diego Pereira
+44455566677
+Manaus
+33
+1
+Drogas
+1
+Roubo
+Camila Silva
+66655544433
+Belém
+27
+1
+Furto
+0
+Gabriel Almeida
+55544433322
+Goiânia
+30
+0
+0
+Júlia Nunes
+44433322211
+Vitória
+35
+1
+Homicídio
+0
+Ricardo Oliveira
+33322211100
+Natal
+41
+1
+Estelionato
+2
+Roubo
+Assasinato
+Renata Fernandes
+22211100099
+Teresina
+23
+2
+Agiotagem
+Tráfico de drogas
+0
+Andréia Souza
+11100099988
+João Pessoa
+39
+1
+Lesão corporal
+0
+Luiz Costa
+00099988877
+Campo Grande
+26
+1
+Furto
+0
+Fernanda Silva
+99988877766
+Cuiabá
+34
+0
+0
+Tiago Pereira
+88877766655
+Aracaju
+32
+2
+Roubo
+Furto
+0

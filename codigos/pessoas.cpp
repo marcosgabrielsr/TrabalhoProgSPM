@@ -2,7 +2,7 @@
 #include "spm_functions.h"
 
 //Função que adiciona pessoas ao fim da lista
-void add_pessoa(pessoa *&lista, char nome[], char cidade[], char cpf[], char *pass, char *inad, int idade, int q_pass, int q_inad){
+void add_pessoa(pessoa *&lista, char nome[], char cidade[], char cpf[], char pass[MAX][MAX + 1], char inad[MAX][MAX + 1], int idade, int q_pass, int q_inad){
     pessoa *p = lista, *novo;
 
     novo = (pessoa*) calloc (1, sizeof(pessoa));
@@ -13,6 +13,12 @@ void add_pessoa(pessoa *&lista, char nome[], char cidade[], char cpf[], char *pa
     novo->q_inad = q_inad;
     novo->idade = idade;
     novo->prox = NULL;
+
+    for(int i = 0; i < q_pass; i++)
+        strcpy(novo->pass[i], pass[i]);
+
+    for(int i = 0; i < q_inad; i++)
+        strcpy(novo->inad[i], inad[i]);
 
     if(p == NULL)
         lista = novo;
@@ -46,7 +52,7 @@ void ler_pessoas(pessoa *&lista){
     FILE *p;
     char nome[MAX + 1], cidade[MAX + 1], cpf[15];
     int q_pass, q_inad, idade;
-    char *pass, *inad;
+    char pass[MAX][MAX + 1], inad[MAX][MAX + 1];
 
     p = fopen("arquivos_entrada/pessoas.txt", "r");
 
@@ -61,16 +67,12 @@ void ler_pessoas(pessoa *&lista){
             
             fscanf(p, "%d", &q_pass);
             if(q_pass != 0){
-                pass = (char*) calloc (q_pass, sizeof(char));
-
                 for(int i = 0; i < q_pass; i++)
                     fscanf(p, " %[^\n]", pass[i]);
             }
 
             fscanf(p, "%d", &q_inad);
             if(q_inad != 0){
-                inad = (char*) calloc (q_inad, sizeof(char));
-
                 for(int i = 0; i < q_inad; i++)
                     fscanf(p, " %[^\n]", inad[i]);
             }
@@ -95,9 +97,11 @@ void printf_pessoas(pessoa *lista){
             printf("-%s\n", p->pass[i]);
         }
 
-        printf("Inadiplências(%d): \n");
+        printf("Inadiplências(%d): \n", p->q_inad);
         for(int i = 0; i < p->q_inad; i++){
-            printf("-%s\n", p->inad);
+            printf("-%s\n", p->inad[i]);
         }
+
+        printf("\n");
     }
 }

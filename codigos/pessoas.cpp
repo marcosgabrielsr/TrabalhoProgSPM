@@ -1,24 +1,59 @@
 //Aqui estão as funções referentes às pessoas
 #include "spm_functions.h"
 
+//Adiciona crimes na última posição da lista
+void add_crime(crime *&lista, char word[MAX + 1]){
+    crime *p = lista, *novo;
+
+    novo = (crime*) calloc (1, sizeof(crime));
+    strcpy(novo->crime, word);
+    novo->prox = NULL;
+
+    if(lista == NULL)
+        lista = novo;
+    else{
+        while(p->prox != NULL) p = p->prox;
+        p->prox = novo;
+    }
+}
+
+//Função que remove o último crime da lista
+void remove_crime(crime *&lista){
+    crime *p = lista, *q = NULL;
+
+    while(p->prox != NULL){
+        q = p;
+        p = p->prox;
+    }
+
+    if(p == lista)
+        lista = NULL;
+    else
+        q->prox = NULL;
+    
+    free(p);
+}
+
+//Função que imprime todos os crimes da lista
+void printf_crime(crime *lista){
+    for(crime *p = lista; p != NULL; p = p->prox)
+        printf("- %s\n", p->crime);
+
+    printf("\n");
+}
+
 //Função que adiciona pessoas ao fim da lista
-void add_pessoa(pessoa *&lista, char nome[], char cidade[], char cpf[], char pass[MAX][MAX + 1], char inad[MAX][MAX + 1], int idade, int q_pass, int q_inad){
+void add_pessoa(pessoa *&lista, char nome[], char cidade[], char cpf[], crime *pass, crime *inad, int idade){
     pessoa *p = lista, *novo;
 
     novo = (pessoa*) calloc (1, sizeof(pessoa));
     strcpy(novo->nome, nome);
     strcpy(novo->cidade, cidade);
     strcpy(novo->cpf, cpf);
-    novo->q_pass = q_pass;
-    novo->q_inad = q_inad;
+    novo->pass = pass;
+    novo->inad = inad;
     novo->idade = idade;
     novo->prox = NULL;
-
-    for(int i = 0; i < q_pass; i++)
-        strcpy(novo->pass[i], pass[i]);
-
-    for(int i = 0; i < q_inad; i++)
-        strcpy(novo->inad[i], inad[i]);
 
     if(p == NULL)
         lista = novo;
@@ -43,6 +78,9 @@ void remove_pessoa(pessoa *&lista){
         else
             q->prox = NULL;
         
+        while(p->pass != NULL) remove_crime(p->pass);
+        while(p->inad != NULL) remove_crime(p->inad);
+
         free(p);
     }
 }
@@ -52,7 +90,7 @@ void ler_pessoas(pessoa *&lista){
     FILE *p;
     char nome[MAX + 1], cidade[MAX + 1], cpf[15];
     int q_pass, q_inad, idade;
-    char pass[MAX][MAX + 1], inad[MAX][MAX + 1];
+    char word[MAX];
 
     p = fopen("arquivos_entrada/pessoas.txt", "r");
 
@@ -60,6 +98,8 @@ void ler_pessoas(pessoa *&lista){
         printf("Erro ao abrir o arquivo\n");
     else{
         while(feof(p) == 0){
+            crime *pass = NULL, *inad = NULL;
+
             fscanf(p, " %[^\n]", nome);
             fscanf(p , " %s", cpf);
             fscanf(p, " %[^\n]", cidade);
@@ -67,17 +107,21 @@ void ler_pessoas(pessoa *&lista){
             
             fscanf(p, "%d", &q_pass);
             if(q_pass != 0){
-                for(int i = 0; i < q_pass; i++)
-                    fscanf(p, " %[^\n]", pass[i]);
+                for(int i = 0; i < q_pass; i++){
+                    fscanf(p, " %[^\n]", word);
+                    add_crime(pass, word);
+                }
             }
 
             fscanf(p, "%d", &q_inad);
             if(q_inad != 0){
-                for(int i = 0; i < q_inad; i++)
-                    fscanf(p, " %[^\n]", inad[i]);
+                for(int i = 0; i < q_inad; i++){
+                    fscanf(p, " %[^\n]", word);
+                    add_crime(inad, word);
+                }
             }
 
-            add_pessoa(lista, nome, cidade, cpf, pass, inad, idade, q_pass, q_inad);
+            add_pessoa(lista, nome, cidade, cpf, pass, inad, idade);
         }
         
         fclose(p);
@@ -92,15 +136,11 @@ void printf_pessoas(pessoa *lista){
         printf("Cidade: %s\n", p->cidade);
         printf("Idade: %d\n", p->idade);
 
-        printf("Passagens(%d): \n", p->q_pass);
-        for(int i = 0; i < p->q_pass; i++){
-            printf("-%s\n", p->pass[i]);
-        }
+        printf("Passagens: \n");
+        printf_crime(p->pass);
 
-        printf("Inadiplências(%d): \n", p->q_inad);
-        for(int i = 0; i < p->q_inad; i++){
-            printf("-%s\n", p->inad[i]);
-        }
+        printf("Inadimplências: \n");
+        printf_crime(p->inad);
 
         printf("\n");
     }

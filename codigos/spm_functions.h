@@ -19,10 +19,15 @@ struct viatura{
     struct viatura *prox;
 };
 
+struct crime{
+    char crime[MAX];
+    struct crime *prox;
+};
+
 struct pessoa{
     char nome[MAX + 1], cidade[MAX + 1], cpf[15];
-    int q_pass, q_inad, idade;
-    char pass[MAX][MAX + 1], inad[MAX][MAX + 1];
+    int idade;
+    crime *pass, *inad;
     struct pessoa *prox;
 };
 

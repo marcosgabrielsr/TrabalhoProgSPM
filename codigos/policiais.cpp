@@ -87,3 +87,24 @@ void printf_policiais(policia *lista){
         printf("\n");
     }
 }
+
+// char *descriptografar(char *senha){
+//     char *descript;
+//     strcpy(descript, senha);
+    
+//     int i = 0;
+//     while(descript[i] != '\0'){
+
+//         i += 1;
+//     }
+// }
+
+void inventer_senha(char *senha){
+    char senha_invert[MAX];
+    int i = strlen(senha);
+    int j = 0;
+
+    while(i >= 0){
+        
+    }
+}

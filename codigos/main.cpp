@@ -4,15 +4,13 @@ int main(){
     viatura *carros = NULL;
     policia *policiais = NULL;
     pessoa *pessoas = NULL;
+    char word[MAX + 1];
 
-    ler_pessoas(pessoas);
+    scanf("%s", word);
 
-    printf_pessoas(pessoas);
+    criptografar(word);
 
-    while(pessoas != NULL) remove_pessoa(pessoas);
-
-    if(pessoas != NULL)
-        printf("A lista não está vazia\n");
+    printf("%s \n", word);
 
     return 0;
 }

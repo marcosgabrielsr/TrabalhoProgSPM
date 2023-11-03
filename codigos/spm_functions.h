@@ -80,3 +80,6 @@ void ler_pessoas(pessoa *&lista);
 
 //Função que imprime no terminal as pessoas armazenadas
 void printf_pessoas(pessoa *lista);
+
+//Função de criptografia para senhas
+void criptografar(char word[]);

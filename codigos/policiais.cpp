@@ -88,23 +88,27 @@ void printf_policiais(policia *lista){
     }
 }
 
-// char *descriptografar(char *senha){
-//     char *descript;
-//     strcpy(descript, senha);
-    
-//     int i = 0;
-//     while(descript[i] != '\0'){
+//Função de criptografia para senhas
+void criptografar(char word[]){
+    int i = 0;
+    int j = strlen(word) - 1;
 
-//         i += 1;
-//     }
-// }
+    for(int i = 0; word[i] != '\0'; i++){
+        if(word[i] < 48 || word[i] > 57){
+            word[i] = word[i] + 3;
 
-void inventer_senha(char *senha){
-    char senha_invert[MAX];
-    int i = strlen(senha);
-    int j = 0;
+            if(word[i] > 122)
+                word[i] = 96 + (word[i] - 122);
+        }
+    }
 
-    while(i >= 0){
-        
+    while(i < j){
+        char aux = word[i];
+
+        word[i] = word[j];
+        word[j] = aux;
+
+        i++;
+        j--;
     }
 }

@@ -1,7 +1,7 @@
 //Biblioteca geral para as funções do sistema
 
 //Funcionalidades:
-//Ler e armazenar pessoas
+//Ler e armazenar pessoas -- feito
 //Ler e armazenar policiais -- feito
 //Ler e armazenar viaturas -- feito
 //Sistema de criptografia dos policiais

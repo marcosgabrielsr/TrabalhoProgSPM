@@ -18,33 +18,3 @@ void general_menu(){
 
     }while(op != 0);
 }
-
-void viatura_login(){
-    int tipo, codigo, qPm;
-    bool fim = false;
-
-    do{
-        printf("\nSPM - Viatura Login\n");
-
-        printf("Tipo de policia (1 - Polica regular / 2 - Policia especializada): ");
-        scanf("%d", &tipo);
-
-        printf("Código Viatura: ");
-        scanf("%d", &codigo);
-
-        printf("Quantidade de PMs: ");
-        scanf("%d", &qPm);
-
-        if((tipo == 1 && (qPm < 2 || qPm > 4)) || (tipo == 2 && qPm != 4))
-            printf("Quantidade de PMs não conicide com o tipo de policia selecionado");
-        else{
-
-        }
-    }while(!fim);
-}
-
-void menu_copom(){
-    int op;
-
-    do{}while(op != 0);
-}

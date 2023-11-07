@@ -13,6 +13,13 @@
 
 #define MAX 100
 
+struct chamada{
+    int t_pol, prioridade, q_viat;
+    char descricao[MAX + 1];
+    char localidade[MAX + 1];
+    struct chamada *prox;
+};
+
 struct viatura{
     char codigo[4];
     char tipo[MAX];
@@ -83,3 +90,12 @@ void printf_pessoas(pessoa *lista);
 
 //Função de criptografia para senhas
 void criptografar(char word[]);
+
+//Função que remove a última chamada da lista
+void remove_chamada(chamada *&lista);
+
+//Função que imprime na tela todas as chamadas cadastradas
+void printf_chamadas(chamada *lista, int t_pol);
+
+//Função que imprime o menu para cadastro de chamadas
+void menu_copom(chamada *&lista);

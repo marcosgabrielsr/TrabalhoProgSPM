@@ -4,13 +4,11 @@ int main(){
     viatura *carros = NULL;
     policia *policiais = NULL;
     pessoa *pessoas = NULL;
-    char word[MAX + 1];
+    chamada *chamadas = NULL;
 
-    scanf("%s", word);
+    menu_copom(chamadas);
 
-    criptografar(word);
-
-    printf("%s \n", word);
-
+    while(chamadas != NULL) remove_chamada(chamadas);
+    
     return 0;
 }

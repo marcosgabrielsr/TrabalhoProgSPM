@@ -4,15 +4,21 @@
 //Ler e armazenar pessoas -- feito
 //Ler e armazenar policiais -- feito
 //Ler e armazenar viaturas -- feito
-//Sistema de criptografia dos policiais -- feito
-//Viatura login
-//COPOM
+//Sistema de criptografia dos policiais
+//COPOM 
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #define MAX 100
+
+struct chamada{
+    int t_pol, prioridade, q_viat;
+    char descricao[MAX + 1];
+    char localidade[MAX + 1];
+    struct chamada *prox;
+};
 
 struct viatura{
     char codigo[4];
@@ -21,13 +27,13 @@ struct viatura{
 };
 
 struct crime{
-    char crime[MAX];
+    char crime[MAX + 1];
     struct crime *prox;
 };
 
 struct pessoa{
     char nome[MAX + 1], cidade[MAX + 1], cpf[15];
-    int idade;
+    int q_pass, q_inad, idade;
     crime *pass, *inad;
     struct pessoa *prox;
 };
@@ -81,3 +87,15 @@ void ler_pessoas(pessoa *&lista);
 
 //Função que imprime no terminal as pessoas armazenadas
 void printf_pessoas(pessoa *lista);
+
+//Função de criptografia para senhas
+void criptografar(char word[]);
+
+//Função que remove a última chamada da lista
+void remove_chamada(chamada *&lista);
+
+//Função que imprime na tela todas as chamadas cadastradas
+void printf_chamadas(chamada *lista, int t_pol);
+
+//Função que imprime o menu para cadastro de chamadas
+void menu_copom(chamada *&lista);

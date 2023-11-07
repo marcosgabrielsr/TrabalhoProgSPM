@@ -4,15 +4,11 @@ int main(){
     viatura *carros = NULL;
     policia *policiais = NULL;
     pessoa *pessoas = NULL;
+    chamada *chamadas = NULL;
 
-    ler_pessoas(pessoas);
+    menu_copom(chamadas);
 
-    printf_pessoas(pessoas);
-
-    while(pessoas != NULL) remove_pessoa(pessoas);
-
-    if(pessoas != NULL)
-        printf("A lista não está vazia\n");
-
+    while(chamadas != NULL) remove_chamada(chamadas);
+    
     return 0;
 }

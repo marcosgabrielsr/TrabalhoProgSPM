@@ -6,9 +6,11 @@ int main(){
     pessoa *pessoas = NULL;
     chamada *chamadas = NULL;
 
-    menu_copom(chamadas);
+    iniciar_sistema(pessoas, carros, policiais);
 
-    while(chamadas != NULL) remove_chamada(chamadas);
-    
+    viatura_login(carros, policiais);
+
+    encerra_sistema(pessoas, carros, policiais);
+
     return 0;
 }

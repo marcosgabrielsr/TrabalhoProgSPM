@@ -42,18 +42,12 @@ struct pessoa{
 };
 
 struct policia{
-    char nome[MAX + 1];
-    char nome_guerra[MAX + 1];
-    char cidade[MAX + 1];
-    char cargo[MAX + 1];
-    char cpf[15];
-    char senha[MAX + 1];
+    char nome[MAX + 1], nome_guerra[MAX + 1];
+    char cidade[MAX + 1], cargo[MAX + 1];
+    char cpf[15], senha[MAX + 1];
     int idade;
     struct policia *prox;
 };
-
-//Função que imprime no terminal o menu principal
-void general_menu();
 
 //Função que adiciona novas viaturas no fim da lista
 void add_viatura(viatura *&lista, char codigo[], char tipo[]);
@@ -102,3 +96,12 @@ void printf_chamadas(chamada *lista, int t_pol);
 
 //Função que imprime o menu para cadastro de chamadas
 void menu_copom(chamada *&lista);
+
+//Função que imprime o menu viatura login e executa suas funcionalidades
+void viatura_login(viatura *&viaturas, policia *&policiais);
+
+//Função que inicializa o sistema pegando todos os dados dos arquivos e armazenando nas listas passadas por parâmetro
+void iniciar_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais);
+
+//Função que limpa a memória alocada dinamicamente
+void encerra_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais);

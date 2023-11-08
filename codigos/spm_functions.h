@@ -14,13 +14,16 @@
 #define MAX 100
 
 struct chamada{
-    int t_pol, prioridade, q_viat;
+    bool concluida;
+    int t_pol, prioridade;
     char descricao[MAX + 1];
     char localidade[MAX + 1];
     struct chamada *prox;
 };
 
 struct viatura{
+    bool disponivel;
+    struct chamada *chamada;
     char codigo[4];
     char tipo[MAX];
     struct viatura *prox;

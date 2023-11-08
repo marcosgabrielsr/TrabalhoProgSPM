@@ -87,3 +87,28 @@ void printf_policiais(policia *lista){
         printf("\n");
     }
 }
+
+//Função de criptografia para senhas
+void criptografar(char word[]){
+    int i = 0;
+    int j = strlen(word) - 1;
+
+    for(int i = 0; word[i] != '\0'; i++){
+        if(word[i] < 48 || word[i] > 57){
+            word[i] = word[i] + 3;
+
+            if(word[i] > 122)
+                word[i] = 96 + (word[i] - 122);
+        }
+    }
+
+    while(i < j){
+        char aux = word[i];
+
+        word[i] = word[j];
+        word[j] = aux;
+
+        i++;
+        j--;
+    }
+}

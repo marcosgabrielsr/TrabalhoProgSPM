@@ -1,18 +1,13 @@
-//Aqui estão todas as funções referente aos policiais
+//Aqui estão todas as funções referentes às viaturas
 #include "spm_functions.h"
 
-//Função que adiciona um policial no fim da lista
-void add_policial(policia *&lista, char nome[], char cpf[], char nome_guerra[], char cidade[], int idade, char cargo[], char senha[]){
-    policia *p = lista, *novo;
+//Função que adiciona novas viaturas no fim da lista
+void add_viatura(viatura *&lista, char codigo[], char tipo[]){
+    viatura *p = lista, *novo;
 
-    novo = (policia*) calloc (1, sizeof(policia));
-    strcpy(novo->nome, nome);
-    strcpy(novo->cpf, cpf);
-    strcpy(novo->nome_guerra, nome_guerra);
-    strcpy(novo->cidade, cidade);
-    novo->idade = idade;
-    strcpy(novo->cargo, cargo);
-    strcpy(novo->senha, senha);
+    novo = (viatura*) calloc (1, sizeof(viatura));
+    strcpy(novo->codigo, codigo);
+    strcpy(novo->tipo, tipo);
     novo->prox = NULL;
 
     if(p == NULL)
@@ -23,9 +18,9 @@ void add_policial(policia *&lista, char nome[], char cpf[], char nome_guerra[], 
     }
 }
 
-//Função que remove o último policial da lista
-void remove_policial(policia *&lista){
-    policia *p = lista, *q = NULL;
+//Função que remove a última viatura da lista
+void remove_viatura(viatura *&lista){
+    viatura *p = lista, *q = NULL;
 
     if(p != NULL){
         while(p->prox != NULL){
@@ -42,73 +37,30 @@ void remove_policial(policia *&lista){
     }
 }
 
-//Função que lê os policiais que estão contidos no arquivo policiais.txt
-void ler_policiais(policia *&lista){
+//Função que lê os dados do arquivo viaturas.txt
+void ler_viaturas(viatura *&viaturas){
     FILE *p;
-    char nome[MAX + 1];
-    char nome_guerra[MAX + 1];
-    char cidade[MAX + 1];
-    char cargo[MAX + 1];
-    char cpf[15];
-    char senha[MAX + 1];
-    int idade;
+    char cod[4], tipo[MAX + 1];
 
-    p = fopen("arquivos_entrada/policiais.txt", "r");
+    p = fopen("arquivos_entrada/viaturas.txt", "r");
 
     if(p == NULL)
-        printf("Erro ao abrir o arquivo\n");
+        printf("Erro ao abrir o arquivo!\n");
     else{
         while(feof(p) == 0){
-            fscanf(p, " %[^\n]", nome);
-            fscanf(p, "%s", cpf);
-            fscanf(p, "%s", nome_guerra);
-            fscanf(p, " %[^\n]", cidade);
-            fscanf(p, "%d", &idade);
-            fscanf(p, " %[^\n]", cargo);
-            fscanf(p, "%s", senha);
-
-            add_policial(lista, nome, cpf, nome_guerra, cidade, idade, cargo, senha);
+            fscanf(p, "%s", cod);
+            fscanf(p, "%s", tipo);
+            add_viatura(viaturas, cod, tipo);
         }
-
+        
         fclose(p);
     }
 }
 
-//Função que imprime os policiais armazenados na lista
-void printf_policiais(policia *lista){
-    for(policia *p = lista; p != NULL; p = p->prox){
-        printf("Nome: %s\n", p->nome);
-        printf("CPF: %s\n", p->cpf);
-        printf("Nome Guerra: %s\n", p->nome_guerra);
-        printf("Cidade: %s\n", p->cidade);
-        printf("Idade: %d\n", p->idade);
-        printf("Cargo: %s\n", p->cargo);
-        printf("Senha: %s\n", p->senha);
-        printf("\n");
-    }
-}
-
-//Função de criptografia para senhas
-void criptografar(char word[]){
-    int i = 0;
-    int j = strlen(word) - 1;
-
-    for(int i = 0; word[i] != '\0'; i++){
-        if(word[i] < 48 || word[i] > 57){
-            word[i] = word[i] + 3;
-
-            if(word[i] > 122)
-                word[i] = 96 + (word[i] - 122);
-        }
-    }
-
-    while(i < j){
-        char aux = word[i];
-
-        word[i] = word[j];
-        word[j] = aux;
-
-        i++;
-        j--;
-    }
+//Função que imprime o código e tipo de todas as viaturas armazenadas na lista
+void printf_viaturas(viatura *lista){
+    for(viatura *p = lista; p != NULL; p = p->prox)
+        printf("código: %s,   tipo: %s \n", p->codigo, p->tipo);
+    
+    printf("\n");
 }

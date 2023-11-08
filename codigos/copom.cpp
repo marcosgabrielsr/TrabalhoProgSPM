@@ -2,15 +2,15 @@
 #include "spm_functions.h"
 
 //Função que adiciona uma chamada na última posição da lista
-void add_chamada(chamada *&lista, int t_pol, int prio, int q_viat, char descricao[], char local[]){
+void add_chamada(chamada *&lista, int t_pol, int prio, char descricao[], char local[]){
     chamada *p = lista, *novo;
 
     novo = (chamada*) calloc (1, sizeof(chamada));
     novo->prioridade = prio;
     novo->t_pol = t_pol;
-    novo->q_viat = q_viat;
     strcpy(novo->descricao, descricao);
     strcpy(novo->localidade, local);
+    novo->concluida = false;
     novo->prox = NULL;
 
     if(lista == NULL)
@@ -47,7 +47,6 @@ void printf_chamadas(chamada *lista, int t_pol){
             if(p->t_pol == 2 && p->prioridade == 2){
                 printf("====== Polícia Especializada =======\n");
                 printf("Prioridade: Prioritária\n");
-                printf("Quantidade de Vituras: %d\n", p->q_viat);
                 printf("Localidade: %s\n", p->localidade);
                 printf("Descrição: %s\n", p->descricao);
                 printf("\n");
@@ -60,7 +59,6 @@ void printf_chamadas(chamada *lista, int t_pol){
             if(p->t_pol == 1){
                 printf("======= Polícia Regular ======\n");
                 (p->prioridade == 2) ? printf("Prioridade: Prioritária\n"):printf("Prioridade: Não Prioritária\n");
-                printf("Quantidade de Vituras: %d\n", p->q_viat);
                 printf("Localidade: %s\n", p->localidade);
                 printf("Descrição: %s\n", p->descricao);
                 printf("\n");
@@ -90,16 +88,13 @@ void menu_copom(chamada *&lista){
             prioridade = 2;
         }
 
-        printf("Viaturas necessárias: ");
-        scanf("%d", &q_viat);
-
         printf("Descrição: ");
         scanf(" %[^\n]", descricao);
 
         printf("Localidade: ");
         scanf(" %[^\n]", local);
 
-        add_chamada(lista, t_pol, prioridade, q_viat, descricao, local);
+        add_chamada(lista, t_pol, prioridade, descricao, local);
 
         printf("Continuar (1/0): ");
         scanf("%d", &ativo);

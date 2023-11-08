@@ -64,8 +64,8 @@ void printf_viaturas(viatura *lista){
     for(viatura *p = lista; p != NULL; p = p->prox){
         printf("código: %s \n", p->codigo);
         printf("tipo: %s \n", p->tipo);
-        
         (p->disponivel) ? printf("estado: Disponível\n") : printf("estado: Indisponível\n");
+        printf("\n");
     }
 
     printf("\n");

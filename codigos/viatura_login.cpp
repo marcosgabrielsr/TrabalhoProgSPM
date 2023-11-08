@@ -128,4 +128,6 @@ void viatura_login(viatura *&viaturas, policia *&policiais){
         }
 
     }while(t != 1 && t != 2);
+    
+    printf("\n");
 }

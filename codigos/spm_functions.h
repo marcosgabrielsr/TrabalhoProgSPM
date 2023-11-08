@@ -5,6 +5,8 @@
 //Ler e armazenar policiais -- feito
 //Ler e armazenar viaturas -- feito
 //Sistema de criptografia dos policiais -- feito
+//Viatura Login
+//Viatura em Uso
 //COPOM  -- feito
 
 #include <stdio.h>
@@ -89,19 +91,27 @@ void printf_pessoas(pessoa *lista);
 void criptografar(char word[]);
 
 //Função que remove a última chamada da lista
-void remove_chamada(chamada *&lista);
+void desenfileirar_chamada(chamada *&fila, chamada *&end);
 
 //Função que imprime na tela todas as chamadas cadastradas
 void printf_chamadas(chamada *lista, int t_pol);
 
 //Função que imprime o menu para cadastro de chamadas
-void menu_copom(chamada *&lista);
+void menu_copom(chamada *&begin, chamada *&end);
 
 //Função que imprime o menu viatura login e executa suas funcionalidades
 void viatura_login(viatura *&viaturas, policia *&policiais);
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Função que inicializa o sistema pegando todos os dados dos arquivos e armazenando nas listas passadas por parâmetro
 void iniciar_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais);
 
 //Função que limpa a memória alocada dinamicamente
-void encerra_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais);
+void encerra_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&begin, chamada *&end);
+
+//Função que imprime o menu principal na tela
+void menu_principal(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&begin, chamada *&end);

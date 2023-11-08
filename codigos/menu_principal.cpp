@@ -9,16 +9,18 @@ void iniciar_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais){
 }
 
 //Função que limpa a memória alocada dinamicamente
-void encerra_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais){
+void encerra_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&begin, chamada *&end){
     while(pessoas != NULL) remove_pessoa(pessoas);
     while(viaturas != NULL) remove_viatura(viaturas);
     while(policiais != NULL) remove_policial(policiais);
+    while(begin != NULL) desenfileirar_chamada(begin, end);
 
-    if(pessoas != NULL || viaturas != NULL || policiais != NULL)
-        printf("Erro ao desalocar a memória alocada dinamicamente! \n");
+    if(begin != NULL || end != NULL)
+        printf("Erro ao desalocar as chamadas\n");
 }
 
-void menu_principal(){
+//Função que imprime o menu principal na tela
+void menu_principal(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&begin, chamada *&end){
     int op;
 
     do{
@@ -31,7 +33,16 @@ void menu_principal(){
         printf("6 - Comandante Geral\n");
         printf("0 - Encerrar Programa\n");
 
+        printf("\nEscolha uma opção: ");
         scanf("%d", &op);
+
+        if(op == 1)
+            viatura_login(viaturas, policiais);
+        else if(op == 3){
+            menu_copom(begin, end);
+            printf_chamadas(begin, 1);
+        }
+
 
     }while(op != 0);
 }

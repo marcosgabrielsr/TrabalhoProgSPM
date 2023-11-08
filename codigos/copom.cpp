@@ -2,8 +2,8 @@
 #include "spm_functions.h"
 
 //Função que adiciona uma chamada na última posição da lista
-void add_chamada(chamada *&lista, int t_pol, int prio, char descricao[], char local[]){
-    chamada *p = lista, *novo;
+void enfileirar_chamada(chamada *&begin, chamada *&end, int t_pol, int prio, char descricao[], char local[]){
+    chamada *novo;
 
     novo = (chamada*) calloc (1, sizeof(chamada));
     novo->prioridade = prio;
@@ -13,29 +13,27 @@ void add_chamada(chamada *&lista, int t_pol, int prio, char descricao[], char lo
     novo->concluida = false;
     novo->prox = NULL;
 
-    if(lista == NULL)
-        lista = novo;
+    if(begin == NULL){
+        begin = novo;
+        end = novo;
+    }
     else{
-        while(p->prox != NULL) p = p->prox;
-        p->prox = novo;
+        end->prox = novo;
+        end = novo;
     }
 }
 
 //Função que remove a última chamada da lista
-void remove_chamada(chamada *&lista){
-    chamada *p = lista, *q = NULL;
+void desenfileirar_chamada(chamada *&fila, chamada *&end){
+    chamada *p = fila;
 
-    while(p->prox != NULL){
-        q = p;
-        p = p->prox;
+    if(fila != NULL){
+        fila = fila->prox;
+        free(p);
     }
 
-    if(p == lista)
-        lista = NULL;
-    else
-        q->prox = NULL;
-    
-    free(p);
+    if(fila == NULL)
+        end = NULL;
 }
 
 //Função que imprime na tela todas as chamadas cadastradas
@@ -70,7 +68,7 @@ void printf_chamadas(chamada *lista, int t_pol){
 }
 
 //Função que imprime o menu para cadastro de chamadas
-void menu_copom(chamada *&lista){
+void menu_copom(chamada *&begin, chamada *&end){
     int ativo = 1;
     int t_pol, prioridade, q_viat;
     char descricao[MAX + 1], local[MAX + 1];
@@ -94,7 +92,7 @@ void menu_copom(chamada *&lista){
         printf("Localidade: ");
         scanf(" %[^\n]", local);
 
-        add_chamada(lista, t_pol, prioridade, descricao, local);
+        enfileirar_chamada(begin, end, t_pol, prioridade, descricao, local);
 
         printf("Continuar (1/0): ");
         scanf("%d", &ativo);

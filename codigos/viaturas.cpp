@@ -8,6 +8,8 @@ void add_viatura(viatura *&lista, char codigo[], char tipo[]){
     novo = (viatura*) calloc (1, sizeof(viatura));
     strcpy(novo->codigo, codigo);
     strcpy(novo->tipo, tipo);
+    novo->disponivel = true;
+    novo->chamada = NULL;
     novo->prox = NULL;
 
     if(p == NULL)

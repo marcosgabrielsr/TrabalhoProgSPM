@@ -6,19 +6,23 @@ viatura *busca_viatura(viatura *&viaturas, char cod[]){
     viatura *p = viaturas;
 
     while(p != NULL){
-        if(strcmp(p->codigo, cod) == 0 && p->disponivel){
-            p->disponivel = false;
+        if(strcmp(p->codigo, cod) == 0 && p->disponivel)
             return p;
-        }
+
         p = p->prox;
     }
 
     return NULL;
 }
 
+//Função que busca um policial segundo o nome de guerra informado
+policia *busca_policial(){
+
+}
+
 //Função que imprime o menu viatura login e executa suas funcionalidades
 void viatura_login(viatura *&viaturas, policia *&policiais){
-    char cod[4];
+    char cod[4], nome_guerra[MAX + 1];
     int quant_pol, t = 0, cont = 0;
     bool c = true;
     viatura *carro = NULL;
@@ -38,8 +42,6 @@ void viatura_login(viatura *&viaturas, policia *&policiais){
 
         carro = busca_viatura(viaturas, cod);
 
-        printf("%s \n", carro->tipo);
-
         if(carro == NULL)
             printf("Este carro não está disponível. Tente novamente! \n");
 
@@ -51,6 +53,30 @@ void viatura_login(viatura *&viaturas, policia *&policiais){
 
     }while(c);
 
-    printf("Quantidade de PMs: ");
-    scanf("%d", &quant_pol);
+    c = true;
+    do{
+        printf("Quantidade de PMs: ");
+        scanf("%d", &quant_pol);
+
+        if(t == 1){
+            if(quant_pol >= 2 && quant_pol <= 4)
+                c = false;
+            else
+                printf("Quantidade inválida. Tente novamente!\n");
+        } else{
+            if(quant_pol == 4)
+                c = false;
+            else
+                printf("Quantidade inválida. Tente novamente!\n");
+        }
+
+    }while(c);
+
+    printf("Identificação dos PMs: ");
+    while(cont < quant_pol){
+        printf("Nome Guerra: ");
+        scanf("%s", nome_guerra);
+
+        cont++;
+    }
 }

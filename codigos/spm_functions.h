@@ -4,8 +4,8 @@
 //Ler e armazenar pessoas -- feito
 //Ler e armazenar policiais -- feito
 //Ler e armazenar viaturas -- feito
-//Sistema de criptografia dos policiais
-//COPOM 
+//Sistema de criptografia dos policiais -- feito
+//COPOM  -- feito
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -44,7 +44,7 @@ struct pessoa{
 struct policia{
     char nome[MAX + 1], nome_guerra[MAX + 1];
     char cidade[MAX + 1], cargo[MAX + 1];
-    char cpf[15], senha[MAX + 1];
+    char cpf[15], senha[MAX + 1], cod_viat[4];
     int idade;
     struct policia *prox;
 };

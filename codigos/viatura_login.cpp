@@ -1,34 +1,6 @@
 //Aqui estão todas as funções referentes às viaturas
 #include "spm_functions.h"
 
-//Função que busca uma viatura disponível e que corresponde às especificações da chamada
-viatura *busca_viatura(viatura *&viaturas, char cod[]){
-    viatura *p = viaturas;
-
-    while(p != NULL){
-        if(strcmp(p->codigo, cod) == 0 && p->disponivel)
-            return p;
-
-        p = p->prox;
-    }
-
-    return NULL;
-}
-
-//Função que busca um policial segundo o nome de guerra informado
-policia *busca_policial(policia *&policiais, char nome_guerra[]){
-    policia *p = policiais;
-
-    while(p != NULL){
-        if(strcmp(p->nome_guerra, nome_guerra) == 0 && strlen(p->cod_viat) == 0)
-            return p;
-
-        p = p->prox;
-    }
-
-    return NULL;
-}
-
 //Função que imprime o menu viatura login e executa suas funcionalidades
 void viatura_login(viatura *&viaturas, policia *&policiais){
     char cod[4], nome_guerra[MAX + 1];

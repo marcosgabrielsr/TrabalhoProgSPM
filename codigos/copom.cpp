@@ -37,38 +37,14 @@ void desenfileirar_chamada(chamada *&fila, chamada *&end){
 }
 
 //Função que imprime na tela todas as chamadas cadastradas
-void printf_chamadas(chamada *lista, int t_pol){
-    chamada *p = lista;
-    
-    if(t_pol == 2){
-        while(p != NULL){
-            if(p->t_pol == 2 && p->prioridade == 2){
-                printf("====== Polícia Especializada =======\n");
-                printf("Prioridade: Prioritária\n");
-                printf("Localidade: %s\n", p->localidade);
-                printf("Descrição: %s\n", p->descricao);
-                printf("\n");
-            }
-
-            p = p->prox;
-        }
-    } else{
-        while(p != NULL){
-            if(p->t_pol == 1){
-                printf("======= Polícia Regular ======\n");
-                (p->prioridade == 2) ? printf("Prioridade: Prioritária\n"):printf("Prioridade: Não Prioritária\n");
-                printf("Localidade: %s\n", p->localidade);
-                printf("Descrição: %s\n", p->descricao);
-                printf("\n");
-            }
-
-            p = p->prox;
-        }
+void printf_chamadas(chamada *lista){
+    for(chamada *p = lista; p != NULL; p = p->prox){
+        printf("\n");
     }
 }
 
 //Função que imprime o menu para cadastro de chamadas
-void menu_copom(chamada *&begin, chamada *&end){
+void menu_copom(chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end){
     int ativo = 1;
     int t_pol, prioridade, q_viat;
     char descricao[MAX + 1], local[MAX + 1];
@@ -92,7 +68,10 @@ void menu_copom(chamada *&begin, chamada *&end){
         printf("Localidade: ");
         scanf(" %[^\n]", local);
 
-        enfileirar_chamada(begin, end, t_pol, prioridade, descricao, local);
+        if(prioridade == 1)
+            enfileirar_chamada(np_begin, np_end, t_pol, prioridade, descricao, local);
+        else
+            enfileirar_chamada(p_begin, p_end, t_pol, prioridade, descricao, local);
 
         printf("Continuar (1/0): ");
         scanf("%d", &ativo);
@@ -100,3 +79,18 @@ void menu_copom(chamada *&begin, chamada *&end){
         printf("\n");
     }while(ativo);
 }
+
+//Algoritmo responsável por distribuir uma chamada recém chegada
+void distribuir_chamada(chamada *&chamadas, viatura *&viaturas){
+    bool continuar = true;
+    chamada *c = chamadas;
+    viatura *v = viaturas;
+
+    while(c != NULL && continuar){
+        if(!c->atribuida){
+
+        }
+
+        c = c->prox;
+    }
+}   

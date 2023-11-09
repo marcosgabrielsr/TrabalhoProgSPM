@@ -9,18 +9,24 @@ void iniciar_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais){
 }
 
 //Função que limpa a memória alocada dinamicamente
-void encerra_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&begin, chamada *&end){
+void encerra_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end){
     while(pessoas != NULL) remove_pessoa(pessoas);
     while(viaturas != NULL) remove_viatura(viaturas);
     while(policiais != NULL) remove_policial(policiais);
-    while(begin != NULL) desenfileirar_chamada(begin, end);
 
-    if(begin != NULL || end != NULL)
+    while(p_begin != NULL) desenfileirar_chamada(p_begin, p_end);
+
+    while(np_begin != NULL) desenfileirar_chamada(np_begin, np_end);
+
+    if(p_begin != NULL || p_end != NULL)
+        printf("Erro ao desalocar as chamadas\n");
+    
+    if(np_begin != NULL || np_end != NULL)
         printf("Erro ao desalocar as chamadas\n");
 }
 
 //Função que imprime o menu principal na tela
-void menu_principal(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&begin, chamada *&end){
+void menu_principal(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end){
     int op;
 
     do{
@@ -36,13 +42,13 @@ void menu_principal(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, c
         printf("\nEscolha uma opção: ");
         scanf("%d", &op);
 
+        printf("\n");
+
         if(op == 1)
             viatura_login(viaturas, policiais);
-        else if(op == 3){
-            menu_copom(begin, end);
-            printf_chamadas(begin, 1);
-        }
 
+        else if(op == 3)
+            menu_copom(p_begin, p_end, np_begin, np_end);
 
     }while(op != 0);
 }

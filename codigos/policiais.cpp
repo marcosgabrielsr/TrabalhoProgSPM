@@ -112,3 +112,17 @@ void criptografar(char word[]){
         j--;
     }
 }
+
+//Função que busca um policial segundo o nome de guerra informado
+policia *busca_policial(policia *&policiais, char nome_guerra[]){
+    policia *p = policiais;
+
+    while(p != NULL){
+        if(strcmp(p->nome_guerra, nome_guerra) == 0 && strlen(p->cod_viat) == 0)
+            return p;
+
+        p = p->prox;
+    }
+
+    return NULL;
+}

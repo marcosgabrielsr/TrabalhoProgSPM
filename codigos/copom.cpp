@@ -2,77 +2,49 @@
 #include "spm_functions.h"
 
 //Função que adiciona uma chamada na última posição da lista
-void add_chamada(chamada *&lista, int t_pol, int prio, int q_viat, char descricao[], char local[]){
-    chamada *p = lista, *novo;
+void enfileirar_chamada(chamada *&begin, chamada *&end, int t_pol, int prio, char descricao[], char local[]){
+    chamada *novo;
 
     novo = (chamada*) calloc (1, sizeof(chamada));
     novo->prioridade = prio;
     novo->t_pol = t_pol;
-    novo->q_viat = q_viat;
     strcpy(novo->descricao, descricao);
     strcpy(novo->localidade, local);
+    novo->concluida = false;
     novo->prox = NULL;
 
-    if(lista == NULL)
-        lista = novo;
+    if(begin == NULL){
+        begin = novo;
+        end = novo;
+    }
     else{
-        while(p->prox != NULL) p = p->prox;
-        p->prox = novo;
+        end->prox = novo;
+        end = novo;
     }
 }
 
 //Função que remove a última chamada da lista
-void remove_chamada(chamada *&lista){
-    chamada *p = lista, *q = NULL;
+void desenfileirar_chamada(chamada *&fila, chamada *&end){
+    chamada *p = fila;
 
-    while(p->prox != NULL){
-        q = p;
-        p = p->prox;
+    if(fila != NULL){
+        fila = fila->prox;
+        free(p);
     }
 
-    if(p == lista)
-        lista = NULL;
-    else
-        q->prox = NULL;
-    
-    free(p);
+    if(fila == NULL)
+        end = NULL;
 }
 
 //Função que imprime na tela todas as chamadas cadastradas
-void printf_chamadas(chamada *lista, int t_pol){
-    chamada *p = lista;
-    
-    if(t_pol == 2){
-        while(p != NULL){
-            if(p->t_pol == 2 && p->prioridade == 2){
-                printf("====== Polícia Especializada =======\n");
-                printf("Prioridade: Prioritária\n");
-                printf("Quantidade de Vituras: %d\n", p->q_viat);
-                printf("Localidade: %s\n", p->localidade);
-                printf("Descrição: %s\n", p->descricao);
-                printf("\n");
-            }
-
-            p = p->prox;
-        }
-    } else{
-        while(p != NULL){
-            if(p->t_pol == 1){
-                printf("======= Polícia Regular ======\n");
-                (p->prioridade == 2) ? printf("Prioridade: Prioritária\n"):printf("Prioridade: Não Prioritária\n");
-                printf("Quantidade de Vituras: %d\n", p->q_viat);
-                printf("Localidade: %s\n", p->localidade);
-                printf("Descrição: %s\n", p->descricao);
-                printf("\n");
-            }
-
-            p = p->prox;
-        }
+void printf_chamadas(chamada *lista){
+    for(chamada *p = lista; p != NULL; p = p->prox){
+        printf("\n");
     }
 }
 
 //Função que imprime o menu para cadastro de chamadas
-void menu_copom(chamada *&lista){
+void menu_copom(chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end){
     int ativo = 1;
     int t_pol, prioridade, q_viat;
     char descricao[MAX + 1], local[MAX + 1];
@@ -90,16 +62,16 @@ void menu_copom(chamada *&lista){
             prioridade = 2;
         }
 
-        printf("Viaturas necessárias: ");
-        scanf("%d", &q_viat);
-
         printf("Descrição: ");
         scanf(" %[^\n]", descricao);
 
         printf("Localidade: ");
         scanf(" %[^\n]", local);
 
-        add_chamada(lista, t_pol, prioridade, q_viat, descricao, local);
+        if(prioridade == 1)
+            enfileirar_chamada(np_begin, np_end, t_pol, prioridade, descricao, local);
+        else
+            enfileirar_chamada(p_begin, p_end, t_pol, prioridade, descricao, local);
 
         printf("Continuar (1/0): ");
         scanf("%d", &ativo);
@@ -107,3 +79,18 @@ void menu_copom(chamada *&lista){
         printf("\n");
     }while(ativo);
 }
+
+//Algoritmo responsável por distribuir uma chamada recém chegada
+void distribuir_chamada(chamada *&chamadas, viatura *&viaturas){
+    bool continuar = true;
+    chamada *c = chamadas;
+    viatura *v = viaturas;
+
+    while(c != NULL && continuar){
+        if(!c->atribuida){
+
+        }
+
+        c = c->prox;
+    }
+}   

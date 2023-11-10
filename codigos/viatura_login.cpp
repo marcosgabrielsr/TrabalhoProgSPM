@@ -3,7 +3,7 @@
 
 //Função que apresenta o menu para ação policial em relação a uma chamada
 void ocorrencia(chamada *&chama, viatura *&v, pessoa *&pessoas){
-    int op, op2;
+    int op, op2, q, cont = 0;
     char cpf[MAX];
     pessoa *p = NULL;
 
@@ -33,7 +33,7 @@ void ocorrencia(chamada *&chama, viatura *&v, pessoa *&pessoas){
             if(op == 1){
                 printf("\n====== SPM - Viatura: Pesquisar por CPF ======\n");
                 printf("CPF: ");
-                scanf("%s", cpf);
+                scanf(" %s", cpf);
 
                 p = busca_por_cpf(pessoas, cpf);
 
@@ -41,10 +41,14 @@ void ocorrencia(chamada *&chama, viatura *&v, pessoa *&pessoas){
                     printf("Nome: %s\n", p->nome);
                     printf("CPF: %s\n", p->cpf);
                     printf("Idade: %d\n", p->idade);
-                    printf("Passagens(%d):\n", p->q_pass);
+
+                    printf("Passagens:\n");
                     printf_crime(p->pass);
-                    printf("Inadiplências(%d):\n", p->q_inad);
+                    printf("Inadimplências:\n");
                     printf_crime(p->inad);
+
+                    printf("Status: ");
+                    (p->preso) ? printf("Preso\n") : printf("Livre\n");
 
                     do{
                         printf("1 - Encerrar Visualização\n");
@@ -70,13 +74,56 @@ void ocorrencia(chamada *&chama, viatura *&v, pessoa *&pessoas){
                         //encadeada responsável por armazenar os pedidos de reforços
                     }
                 }while(op2 != 1 && op2 != 2);
+
+            } else if(op == 3){
+                v->prisao_and = true;
+
+                printf("\n====== SPM - Viatura: Prisão em Andamento ======\n");
+                printf("Indivíduo(s) conduzido(s) para a DP: ");
+                scanf("%d", &q);
+
+                while(cont < q){
+                    printf("CPF: ");
+                    scanf(" %s", cpf);
+
+                    p = busca_por_cpf(pessoas, cpf);
+
+                    if(p != NULL){
+                        p->preso = true;
+                        cont++;
+
+                    } else {
+                        printf("Pessoa não cadastrada. Tente novamente!\n");
+                    }
+                }
+
+                do{
+                    printf("\n====== SPM - Viatura: Prisão em Andamento ======\n");
+                    printf("1 - Confirmar retorno da DP\n");
+                    printf("2 - Voltar para o Menu Principal\n");
+                    scanf("%d", &op2);
+
+                    if(op2 == 2)
+                        op = 4;
+
+                    else if(op2 == 1){
+                        chama->concluida = true;
+                        v->chamada = NULL;
+                        v->q_chamadas += 1;
+                        v->prisao_and = false;
+                        
+                        op = 4;
+                    }
+
+                }while(op2 != 1 && op2 != 2);
             }
+
         }while(op != 4);
     }
 }
 
 //Função que imprime o menu viatura login e executa suas funcionalidades
-void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&chamada_p, chamada *&chamada_np){
+void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&chamada_p, chamada *&chamada_np, chamada *&reforco){
     char cod[4], nome_guerra[MAX + 1];
     int quant_pol, op = 0, cont = 0, tipo = 0;
     bool c = true, find = false;
@@ -201,6 +248,12 @@ void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, ch
                         ocorrencia(chama, carro, pessoas);
                     }
                 }
+            }
+
+            if(reforco != NULL){
+                chama = reforco;
+
+                
             }
 
             if(chamada_p == NULL && chamada_np == NULL || carro->chamada == NULL){

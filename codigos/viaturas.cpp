@@ -63,9 +63,10 @@ void ler_viaturas(viatura *&viaturas){
 //Função que imprime o código e tipo de todas as viaturas armazenadas na lista
 void printf_viaturas(viatura *lista){
     for(viatura *p = lista; p != NULL; p = p->prox){
-        printf("código: %s \n", p->codigo);
-        printf("tipo: %s \n", p->tipo);
+        printf("Código: %s \n", p->codigo);
+        printf("Tipo: %s \n", p->tipo);
         (p->disponivel) ? printf("estado: Disponível\n") : printf("estado: Indisponível\n");
+        printf("Quantidade de chamadas atendidas: %d", p->q_chamadas);
         printf("\n");
     }
 

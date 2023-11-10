@@ -21,7 +21,7 @@ void viatura_uso(viatura *&viaturas){
     else if (carro->disponivel == false && carro->chamada == NULL)
         printf("Viatura direcionada para rondas, no aguardo de chamadas policiais");
 
-    else{
+    // else{
         
-    }
+    // }
 }

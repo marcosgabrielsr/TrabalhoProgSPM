@@ -7,8 +7,8 @@
 //Sistema de criptografia dos policiais -- feito
 //Viatura Login -- ainda não concluído
 //Viatura em Uso -- ainda não concluído
-//COPOM  -- feito
-//Sistema de distribuição de chamadas -- ainda não concluído -- ainda não concluído
+//COPOM -- feito
+//Sistema de distribuição de chamadas -- ainda não concluído
 //PM -- ainda não concluído
 
 #include <stdio.h>
@@ -26,7 +26,7 @@ struct chamada{
 };
 
 struct viatura{
-    bool disponivel;
+    bool disponivel, prisao_and;
     int q_chamadas;
     struct chamada *chamada;
     char codigo[4];
@@ -40,8 +40,9 @@ struct crime{
 };
 
 struct pessoa{
+    bool preso;
     char nome[MAX + 1], cidade[MAX + 1], cpf[15];
-    int q_pass, q_inad, idade;
+    int idade;
     crime *pass, *inad;
     struct pessoa *prox;
 };

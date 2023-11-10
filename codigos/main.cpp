@@ -15,6 +15,10 @@ int main(){
     chamada *np_begin = NULL;
     chamada *np_end = NULL;
 
+    //Ponteiro para fila de chamadas de reforços
+    chamada *reforco = NULL;
+    chamada *end_reforco = NULL;
+
     iniciar_sistema(pessoas, carros, policiais);
 
     menu_principal(pessoas, carros, policiais, p_begin, p_end, np_begin, np_end);

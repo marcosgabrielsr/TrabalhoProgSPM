@@ -47,6 +47,7 @@ void add_pessoa(pessoa *&lista, char nome[], char cidade[], char cpf[], crime *p
     pessoa *p = lista, *novo;
 
     novo = (pessoa*) calloc (1, sizeof(pessoa));
+    novo->preso = false;
     strcpy(novo->nome, nome);
     strcpy(novo->cidade, cidade);
     strcpy(novo->cpf, cpf);

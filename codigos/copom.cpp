@@ -71,40 +71,35 @@ viatura * pega_menor_q_chamada(viatura *viaturas, int t_pol){
     viatura *min = viaturas;
     int t;
 
-    if(viaturas != NULL){
-        if(t_pol == 1)
+    if(t_pol == 1)
+        min = v;
+    else
+        min = v->prox;
+    
+    if(strcmp(v->tipo, "regular"))
+        t = 1;
+    else
+        t = 2;
+    
+    while(v != NULL){
+        if(t == t_pol && !(v->disponivel) && v->chamada == NULL && v->q_chamadas < min->q_chamadas)
             min = v;
-        else
-            min = v->prox;
-        
-        if(strcmp(v->tipo, "regular"))
-            t = 1;
-        else
-            t = 2;
-        
-        while(v != NULL){
-            if(t == t_pol && !(v->disponivel) && v->chamada == NULL && v->q_chamadas < min->q_chamadas)
-            min = v;
 
-            v = v->prox;
-        }
-
-        if(!(min->disponivel) && v->chamada == NULL)
-            return min;
-        else
-            return NULL;
-
-    } else {
-        return NULL;
+        v = v->prox;
     }
+
+    if(!(min->disponivel))
+        return min;
+    else
+        return NULL;
 }
 
 //Algoritmo responsável por distribuir uma chamada recém chegada
 void distribuir_chamada(chamada *&chamadas_p, chamada *&chamadas_np, viatura *&viaturas){
     chamada *cp = chamadas_p;
     chamada *cpn = chamadas_np;
-    viatura *v;
-
+    viatura *v = NULL;
+    
     //verifica se há alguma polícia regular ou especializada para atender às chamadas prioritárias
     while(cp != NULL){
         v = pega_menor_q_chamada(viaturas, cp->t_pol);
@@ -113,9 +108,11 @@ void distribuir_chamada(chamada *&chamadas_p, chamada *&chamadas_np, viatura *&v
         if(v != NULL){
             //Atribuimos a chamada à esta respectiva viatura e atualizamos o status da chamada
             //para atribuida
-            v->chamada = cp;
-            cp->atribuida = true;
-            printf("Chamada atribuída à viatura de código: %s\n", v->codigo);
+            if(!(cp->atribuida)){
+                v->chamada = cp;
+                cp->atribuida = true;
+                printf("Chamada atribuída à viatura de código: %s\n", v->codigo);
+            }
         }
 
         cp = cp->prox;
@@ -129,9 +126,11 @@ void distribuir_chamada(chamada *&chamadas_p, chamada *&chamadas_np, viatura *&v
         if(v != NULL){
             //Atribuimos a chamada à esta respectiva viatura e atualizamos o status da chamada
             //para atribuida
-            v->chamada = cpn;
-            cpn->atribuida = true;
-            printf("Chamada atribuída à viatura de código: %s\n", v->codigo);
+            if(!(cpn->atribuida)){
+                v->chamada = cpn;
+                cpn->atribuida = true;
+                printf("Chamada atribuída à viatura de código: %s\n", v->codigo);
+            }
         }
 
         cpn = cpn->prox;

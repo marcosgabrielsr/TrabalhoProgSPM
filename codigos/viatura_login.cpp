@@ -19,7 +19,7 @@ void ocorrencia(chamada *&chama, viatura *&v){
 //Função que imprime o menu viatura login e executa suas funcionalidades
 void viatura_login(viatura *&viaturas, policia *&policiais, chamada *&chamada_p, chamada *&chamada_np){
     char cod[4], nome_guerra[MAX + 1];
-    int quant_pol, t = 0, cont = 0;
+    int quant_pol, op = 0, cont = 0, tipo = 0;
     bool c = true, find = false;
     viatura *carro = NULL;
     policia *pm = NULL;
@@ -29,10 +29,10 @@ void viatura_login(viatura *&viaturas, policia *&policiais, chamada *&chamada_p,
 
     do{
         printf("\nPolícia (1 - regular / 2 - expecializada): ");
-        scanf("%d", &t);
-        if(t != 1 && t != 2) printf("Código inválido, tente novamente! \n");
+        scanf("%d", &tipo);
+        if(tipo != 1 && tipo != 2) printf("Código inválido, tente novamente! \n");
 
-    }while(t != 1 && t != 2);
+    }while(tipo != 1 && tipo != 2);
 
     do{
         printf("\nCódigo da Viatura: ");
@@ -43,7 +43,7 @@ void viatura_login(viatura *&viaturas, policia *&policiais, chamada *&chamada_p,
         if(carro == NULL)
             printf("Este carro não está disponível. Tente novamente! \n");
 
-        else if(strcmp(carro->tipo, "regular") == 0 && t == 1 || strcmp(carro->tipo, "especializada") == 0 && t == 2){
+        else if(strcmp(carro->tipo, "regular") == 0 && tipo == 1 || strcmp(carro->tipo, "especializada") == 0 && tipo == 2){
             carro->disponivel = false;
             c = false;
         }
@@ -58,7 +58,7 @@ void viatura_login(viatura *&viaturas, policia *&policiais, chamada *&chamada_p,
         printf("\nQuantidade de PMs: ");
         scanf("%d", &quant_pol);
 
-        if(t == 1){
+        if(tipo == 1){
             if(quant_pol >= 2 && quant_pol <= 4)
                 c = false;
             else
@@ -93,12 +93,12 @@ void viatura_login(viatura *&viaturas, policia *&policiais, chamada *&chamada_p,
         printf("2 - Cancelar Embarcação\n");
         printf("Escolha uma das opções: ");
 
-        scanf("%d", &t);
+        scanf("%d", &op);
 
-        if(t != 2 && t != 1)
+        if(op != 2 && op != 1)
             printf("Opção inválida. Tente novamente!\n");
 
-        else if(t == 2){
+        else if(op == 2){
             carro->disponivel = true;
             cont = 0;
 
@@ -115,12 +115,12 @@ void viatura_login(viatura *&viaturas, policia *&policiais, chamada *&chamada_p,
             }
         }
 
-        else if(t == 1){
+        else if(op == 1){
             if(chamada_p != NULL){
                 chama = chamada_p;
 
                 while(chama != NULL && !find){
-                    if(!(chama->atribuida)){
+                    if(!(chama->atribuida) && chama->t_pol == tipo){
                         find = true;
                         carro->chamada = chama;
                         ocorrencia(chama, carro);
@@ -134,12 +134,12 @@ void viatura_login(viatura *&viaturas, policia *&policiais, chamada *&chamada_p,
                 printf("\n====== SPM - Viatura em Modo Ronda ======\n");
                 printf("Viatura direcionada para rondas, no aguardo de chamadas policiais\n");
                 printf("1 - Voltar para o Menu Principal\n");
-                scanf("%d", &t);
-                t = 2;
+                scanf("%d", &op);
+                op = 2;
             }
         }
 
-    }while(t != 1 && t != 2);
+    }while(op != 1 && op != 2);
     
     printf("\n");
 }

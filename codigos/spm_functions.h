@@ -89,6 +89,9 @@ void remove_pessoa(pessoa *&lista);
 //Função que lê as pessoas que estão contidas no arquivo pessoas.txt
 void ler_pessoas(pessoa *&lista);
 
+//Função que imprime todos os crimes da lista
+void printf_crime(crime *lista);
+
 //Função que imprime no terminal as pessoas armazenadas
 void printf_pessoas(pessoa *lista);
 
@@ -101,7 +104,7 @@ void desenfileirar_chamada(chamada *&fila, chamada *&end);
 //Função que imprime na tela todas as chamadas cadastradas
 void printf_chamadas(chamada *lista);
 
-//Função que imprime o menu para cadastro de chamadas
+//Função que imprime o menu para cadastro de chamadas, ou seja, menu copom
 void menu_copom(chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end, viatura *&viaturas);
 
 //Função que busca uma viatura disponível e que corresponde às especificações da chamada
@@ -110,8 +113,17 @@ viatura *busca_viatura(viatura *&viaturas, char cod[]);
 //Função que busca um policial segundo o nome de guerra informado
 policia *busca_policial(policia *&policiais, char nome_guerra[]);
 
+//Função que busca uma pessoa por CPF e retorna seu ponteiro
+pessoa *busca_por_cpf(pessoa *pessoas, char cpf[]);
+
+//Função que apresenta o menu para ação policial em relação a uma chamada
+void ocorrencia(chamada *&chama, viatura *&v, pessoa *&pessoas);
+
+//Função responsável pela funcionalidade de viatura em uso
+void viatura_uso(viatura *&viaturas);
+
 //Função que imprime o menu viatura login e executa suas funcionalidades
-void viatura_login(viatura *&viaturas, policia *&policiais, chamada *&chamada_p, chamada *&chamada_np);
+void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&chamada_p, chamada *&chamada_np);
 
 /*--- Funções responsáveis pela execução do sistema --------------------------------------------------------------------------------------------*/
 

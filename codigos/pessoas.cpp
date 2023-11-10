@@ -145,3 +145,19 @@ void printf_pessoas(pessoa *lista){
         printf("\n");
     }
 }
+
+//Função que busca uma pessoa por CPF e retorna seu ponteiro
+pessoa *busca_por_cpf(pessoa *pessoas, char cpf[]){
+    pessoa *p = pessoas;
+
+    if(pessoas != NULL){
+        while(p != NULL){
+            if(strcmp(p->cpf, cpf) == 0)
+                return p;
+
+            p = p->prox;
+        }
+    }
+
+    return NULL;
+}

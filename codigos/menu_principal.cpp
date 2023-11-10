@@ -45,7 +45,10 @@ void menu_principal(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, c
         printf("\n");
 
         if(op == 1)
-            viatura_login(viaturas, policiais, p_begin, np_begin);
+            viatura_login(pessoas, viaturas, policiais, p_begin, np_begin);
+
+        else if(op == 2)
+            viatura_uso(viaturas);
 
         else if(op == 3)
             menu_copom(p_begin, p_end, np_begin, np_end, viaturas);

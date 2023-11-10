@@ -82,13 +82,13 @@ viatura * pega_menor_q_chamada(viatura *viaturas, int t_pol){
         t = 2;
     
     while(v != NULL){
-        if(t == t_pol && !(v->disponivel) && v->chamada == NULL && v->q_chamadas < min->q_chamadas)
+        if(t == t_pol && !(v->disponivel) && v->chamada == NULL && (v->q_chamadas <= min->q_chamadas))
             min = v;
 
         v = v->prox;
     }
 
-    if(!(min->disponivel))
+    if(!(min->disponivel) && min->chamada == NULL)
         return min;
     else
         return NULL;

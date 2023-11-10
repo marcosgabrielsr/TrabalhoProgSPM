@@ -1,8 +1,11 @@
 //Aqui estão todas as funções referentes às viaturas
 #include "spm_functions.h"
 
-void ocorrencia(chamada *&chama, viatura *&v){
-    int op;
+//Função que apresenta o menu para ação policial em relação a uma chamada
+void ocorrencia(chamada *&chama, viatura *&v, pessoa *&pessoas){
+    int op, op2;
+    char cpf[MAX];
+    pessoa *p = NULL;
 
     printf("\n====== SPM - Viatura Chamada Policial ======\n");
     printf("Descrição: %s \n", chama->descricao);
@@ -13,11 +16,67 @@ void ocorrencia(chamada *&chama, viatura *&v){
     if(op == 2){
         chama->concluida = true;
         v->chamada = NULL;
+        v->q_chamadas += 1;
+
+    } else if(op == 1){
+
+        do{
+            printf("\n====== SPM - Viatura Ocorrência ======\n");
+            printf("1 - Pesquisar por CPF\n");
+            printf("2 - Soliciar Reforços\n");
+            printf("3 - Prisão em Andamento\n");
+            printf("4 - Encerrar Ocorrência\n");
+
+            printf("Escolha uma das opções: ");
+            scanf("%d", &op);
+
+            if(op == 1){
+                printf("\n====== SPM - Viatura: Pesquisar por CPF ======\n");
+                printf("CPF: ");
+                scanf("%s", cpf);
+
+                p = busca_por_cpf(pessoas, cpf);
+
+                if(p != NULL){
+                    printf("Nome: %s\n", p->nome);
+                    printf("CPF: %s\n", p->cpf);
+                    printf("Idade: %d\n", p->idade);
+                    printf("Passagens(%d):\n", p->q_pass);
+                    printf_crime(p->pass);
+                    printf("Inadiplências(%d):\n", p->q_inad);
+                    printf_crime(p->inad);
+
+                    do{
+                        printf("1 - Encerrar Visualização\n");
+                        scanf("%d", &op2);
+                    }while(op2 != 1);
+                }
+                else{
+                    printf("Pessoa não cadastrada. Tente novamente!\n");
+                }
+
+            } else if(op == 2){
+                printf("\n====== SPM - Viatura: Solicitar Reforços ======\n");
+                printf("1 - Confirmar Solicitação de Reforços\n");
+                printf("2 - Cancelar\n");
+
+                do{
+                    scanf("%d", &op2);
+
+                    if(op2 != 1 && op2 != 2)
+                        printf("Opção inválida. Tente novamente!\n");
+                    else if(op2 == 1){
+                        //Será adicionado um pedido de reforço à uma lista
+                        //encadeada responsável por armazenar os pedidos de reforços
+                    }
+                }while(op2 != 1 && op2 != 2);
+            }
+        }while(op != 4);
     }
 }
 
 //Função que imprime o menu viatura login e executa suas funcionalidades
-void viatura_login(viatura *&viaturas, policia *&policiais, chamada *&chamada_p, chamada *&chamada_np){
+void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&chamada_p, chamada *&chamada_np){
     char cod[4], nome_guerra[MAX + 1];
     int quant_pol, op = 0, cont = 0, tipo = 0;
     bool c = true, find = false;
@@ -123,10 +182,24 @@ void viatura_login(viatura *&viaturas, policia *&policiais, chamada *&chamada_p,
                     if(!(chama->atribuida) && chama->t_pol == tipo){
                         find = true;
                         carro->chamada = chama;
-                        ocorrencia(chama, carro);
+                        chama->atribuida = true;
+                        ocorrencia(chama, carro, pessoas);
                     }
                     else
                         chama = chama->prox;
+                }
+            }
+
+            if(chamada_np != NULL){
+                chama = chamada_np;
+
+                while(chama != NULL && !find){
+                    if(!(chama->atribuida) && chama->t_pol == tipo){
+                        find = true;
+                        carro->chamada = chama;
+                        chama->atribuida = true;
+                        ocorrencia(chama, carro, pessoas);
+                    }
                 }
             }
 

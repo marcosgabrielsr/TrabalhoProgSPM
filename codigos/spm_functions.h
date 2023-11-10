@@ -113,6 +113,9 @@ policia *busca_policial(policia *&policiais, char nome_guerra[]);
 //Função que imprime o menu viatura login e executa suas funcionalidades
 void viatura_login(viatura *&viaturas, policia *&policiais);
 
+//função que imprime o menu viatura em uso e executa suas funcionalidades
+void viatura_uso(viatura *&viaturas, chamada *&chamadas);
+
 /*--- Funções responsáveis pela execução do sistema --------------------------------------------------------------------------------------------*/
 
 //Função que inicializa o sistema pegando todos os dados dos arquivos e armazenando nas listas passadas por parâmetro

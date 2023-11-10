@@ -26,7 +26,7 @@ void encerra_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, 
 }
 
 //Função que imprime o menu principal na tela
-void menu_principal(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end){
+void menu_principal(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *chamadas, chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end){
     int op;
 
     do{
@@ -46,7 +46,8 @@ void menu_principal(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, c
 
         if(op == 1)
             viatura_login(viaturas, policiais);
-
+        else if(op == 2)
+            viatura_uso(viaturas, chamadas);
         else if(op == 3)
             menu_copom(p_begin, p_end, np_begin, np_end);
 

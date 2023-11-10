@@ -1,13 +1,29 @@
 //Aqui estão todas as funções referentes às viaturas
 #include "spm_functions.h"
 
+void ocorrencia(chamada *&chama, viatura *&v){
+    int op;
+
+    printf("\n====== SPM - Viatura Chamada Policial ======\n");
+    printf("Descrição: %s \n", chama->descricao);
+    printf("Localidade: %s \n", chama->localidade);
+    printf("Confirmar Ação Policial - 1     Ação Policial Dispensada - 2\n");
+    scanf("%d", &op);
+
+    if(op == 2){
+        chama->concluida = true;
+        v->chamada = NULL;
+    }
+}
+
 //Função que imprime o menu viatura login e executa suas funcionalidades
-void viatura_login(viatura *&viaturas, policia *&policiais){
+void viatura_login(viatura *&viaturas, policia *&policiais, chamada *&chamada_p, chamada *&chamada_np){
     char cod[4], nome_guerra[MAX + 1];
     int quant_pol, t = 0, cont = 0;
-    bool c = true;
+    bool c = true, find = false;
     viatura *carro = NULL;
     policia *pm = NULL;
+    chamada *chama = NULL;
 
     printf("====== SPM - Viatura Login ======\n");
 
@@ -96,6 +112,30 @@ void viatura_login(viatura *&viaturas, policia *&policiais){
                 }
 
                 cont++;
+            }
+        }
+
+        else if(t == 1){
+            if(chamada_p != NULL){
+                chama = chamada_p;
+
+                while(chama != NULL && !find){
+                    if(!(chama->atribuida)){
+                        find = true;
+                        carro->chamada = chama;
+                        ocorrencia(chama, carro);
+                    }
+                    else
+                        chama = chama->prox;
+                }
+            }
+
+            if(chamada_p == NULL && chamada_np == NULL || carro->chamada == NULL){
+                printf("\n====== SPM - Viatura em Modo Ronda ======\n");
+                printf("Viatura direcionada para rondas, no aguardo de chamadas policiais\n");
+                printf("1 - Voltar para o Menu Principal\n");
+                scanf("%d", &t);
+                t = 2;
             }
         }
 

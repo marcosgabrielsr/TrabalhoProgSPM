@@ -99,10 +99,10 @@ void criptografar(char word[]);
 void desenfileirar_chamada(chamada *&fila, chamada *&end);
 
 //Função que imprime na tela todas as chamadas cadastradas
-void printf_chamadas(chamada *lista, int t_pol);
+void printf_chamadas(chamada *lista);
 
 //Função que imprime o menu para cadastro de chamadas
-void menu_copom(chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end);
+void menu_copom(chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end, viatura *&viaturas);
 
 //Função que busca uma viatura disponível e que corresponde às especificações da chamada
 viatura *busca_viatura(viatura *&viaturas, char cod[]);
@@ -111,7 +111,7 @@ viatura *busca_viatura(viatura *&viaturas, char cod[]);
 policia *busca_policial(policia *&policiais, char nome_guerra[]);
 
 //Função que imprime o menu viatura login e executa suas funcionalidades
-void viatura_login(viatura *&viaturas, policia *&policiais);
+void viatura_login(viatura *&viaturas, policia *&policiais, chamada *&chamada_p, chamada *&chamada_np);
 
 /*--- Funções responsáveis pela execução do sistema --------------------------------------------------------------------------------------------*/
 

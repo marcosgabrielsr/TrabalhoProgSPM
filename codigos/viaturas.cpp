@@ -9,6 +9,8 @@ void add_viatura(viatura *&lista, char codigo[], char tipo[]){
     strcpy(novo->codigo, codigo);
     strcpy(novo->tipo, tipo);
     novo->disponivel = true;
+    novo->prisao_and = false;
+    novo->atd_reforco = false;
     novo->q_chamadas = 0;
     novo->chamada = NULL;
     novo->prox = NULL;

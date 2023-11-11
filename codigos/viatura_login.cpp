@@ -2,19 +2,19 @@
 #include "spm_functions.h"
 
 //Função que apresenta o menu para ação policial em relação a uma chamada
-void ocorrencia(chamada *&chama, viatura *&v, pessoa *&pessoas){
+void ocorrencia(chamada *&c, viatura *&v, viatura *&carros, pessoa *&pessoas, chamada *&r_begin, chamada *&r_end){
     int op, op2, q, cont = 0;
     char cpf[MAX];
     pessoa *p = NULL;
 
     printf("\n====== SPM - Viatura Chamada Policial ======\n");
-    printf("Descrição: %s \n", chama->descricao);
-    printf("Localidade: %s \n", chama->localidade);
+    printf("Descrição: %s \n", c->descricao);
+    printf("Localidade: %s \n", c->localidade);
     printf("Confirmar Ação Policial - 1     Ação Policial Dispensada - 2\n");
     scanf("%d", &op);
 
     if(op == 2){
-        chama->concluida = true;
+        c->concluida = true;
         v->chamada = NULL;
         v->q_chamadas += 1;
 
@@ -70,9 +70,9 @@ void ocorrencia(chamada *&chama, viatura *&v, pessoa *&pessoas){
                     if(op2 != 1 && op2 != 2)
                         printf("Opção inválida. Tente novamente!\n");
                     else if(op2 == 1){
-                        //Será adicionado um pedido de reforço à uma lista
-                        //encadeada responsável por armazenar os pedidos de reforços
+                        enfileirar_chamada(r_begin, r_end, c->t_pol, c->prioridade, c->descricao, c->localidade, c);
                     }
+
                 }while(op2 != 1 && op2 != 2);
 
             } else if(op == 3){
@@ -90,6 +90,7 @@ void ocorrencia(chamada *&chama, viatura *&v, pessoa *&pessoas){
 
                     if(p != NULL){
                         p->preso = true;
+                        p->chamada = v->chamada;
                         cont++;
 
                     } else {
@@ -107,7 +108,20 @@ void ocorrencia(chamada *&chama, viatura *&v, pessoa *&pessoas){
                         op = 4;
 
                     else if(op2 == 1){
-                        chama->concluida = true;
+                        c->concluida = true;
+
+                        for(viatura *p = carros; p != NULL; p = p->prox){
+                            if(p->chamada != NULL){
+                                if((p->chamada)->reforco == c){
+                                    (p->chamada)->concluida = true;
+                                    p->chamada = NULL;
+                                    p->q_chamadas += 1;
+                                    p->atd_reforco = false;
+                                    p->prisao_and = false;
+                                }
+                            }
+                        }
+
                         v->chamada = NULL;
                         v->q_chamadas += 1;
                         v->prisao_and = false;
@@ -123,7 +137,7 @@ void ocorrencia(chamada *&chama, viatura *&v, pessoa *&pessoas){
 }
 
 //Função que imprime o menu viatura login e executa suas funcionalidades
-void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&chamada_p, chamada *&chamada_np){
+void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&chamada_p, chamada *&chamada_np, chamada *&r_begin, chamada *&r_end){
     char cod[4], nome_guerra[MAX + 1];
     int quant_pol, op = 0, cont = 0, tipo = 0;
     bool c = true, find = false;
@@ -222,7 +236,7 @@ void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, ch
         }
 
         else if(op == 1){
-            if(chamada_p != NULL){
+            if(chamada_p != NULL && carro->chamada == NULL){
                 chama = chamada_p;
 
                 while(chama != NULL && !find){
@@ -230,14 +244,15 @@ void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, ch
                         find = true;
                         carro->chamada = chama;
                         chama->atribuida = true;
-                        ocorrencia(chama, carro, pessoas);
+                        strcpy(chama->cod, carro->codigo);
+                        ocorrencia(chama, carro, viaturas, pessoas, r_begin, r_end);
                     }
                     else
                         chama = chama->prox;
                 }
             }
 
-            if(chamada_np != NULL){
+            if(chamada_np != NULL && carro->chamada == NULL){
                 chama = chamada_np;
 
                 while(chama != NULL && !find){
@@ -245,18 +260,48 @@ void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, ch
                         find = true;
                         carro->chamada = chama;
                         chama->atribuida = true;
-                        ocorrencia(chama, carro, pessoas);
+                        strcpy(chama->cod, carro->codigo);
+                        ocorrencia(chama, carro, viaturas, pessoas, r_begin, r_end);
                     }
+                    else
+                        chama = chama->prox;
                 }
             }
 
-            // if(reforco != NULL){
-            //     chama = reforco;
+            if(carro->chamada == NULL)
+                printf("A\n");
 
+            if(r_begin != NULL && carro->chamada == NULL){
+                chama = r_begin;
                 
-            // }
+                printf("\n====== SPM - Pedido de Reforco ======\n");
 
-            if(chamada_p == NULL && chamada_np == NULL || carro->chamada == NULL){
+                while(chama != NULL && !(carro->atd_reforco) && (carro->chamada == NULL)){
+                    if(!(chama->atribuida)){
+                        printf("Pedido de Reforco: \n");
+                        printf("Descricao: %s\n", chama->descricao);
+                        printf("Localidade: %s\n", chama->localidade);
+                        printf("1 - Confirmar / 2 - Negar\n");
+                        do{
+                            printf("Escolha uma das opções: ");
+                            scanf("%d", &op);
+
+                            if(op == 1){
+                                carro->atd_reforco = true;
+                                carro->chamada = chama;
+                                chama->atribuida = true;
+                                strcpy(chama->cod, carro->codigo);
+                            }
+
+                        }while(op != 1 && op != 2);
+                    }
+
+                    chama = chama->prox;
+                }
+            }
+            
+
+            if(chamada_p == NULL && chamada_np == NULL  && r_begin == NULL || carro->chamada == NULL){
                 printf("\n====== SPM - Viatura em Modo Ronda ======\n");
                 printf("Viatura direcionada para rondas, no aguardo de chamadas policiais\n");
                 printf("1 - Voltar para o Menu Principal\n");

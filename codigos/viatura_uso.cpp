@@ -24,7 +24,7 @@ viatura* busca_cod(char cod[], viatura *viaturas){
 }
 
 //Função responsável pela funcionalidade de viatura em uso
-void viatura_uso(viatura *&viaturas, pessoa *&pessoas){
+void viatura_uso(viatura *&viaturas, pessoa *&pessoas, chamada *&r_begin, chamada *&r_end){
     char cod[4], cpf[MAX];
     int q, cont = 0, op2;
     viatura *carro = NULL;
@@ -42,11 +42,15 @@ void viatura_uso(viatura *&viaturas, pessoa *&pessoas){
         if (carro->disponivel == true)
             printf("Não foi embarcado\n");
 
+        else if(carro->atd_reforco)
+            printf("Viatura atendendo a pedido de reforço!\n");
+
         else if (carro->disponivel == false && carro->chamada == NULL)
             printf("Viatura direcionada para rondas, no aguardo de chamadas policiais\n");
 
-        else if (!(carro->disponivel) && carro->chamada != NULL && !(carro->prisao_and))
-            ocorrencia(carro->chamada, carro, pessoas);
+        else if (!(carro->disponivel) && carro->chamada != NULL && !(carro->prisao_and)){
+            ocorrencia(carro->chamada, carro, viaturas, pessoas, r_begin, r_end);
+        }
 
         else if (!(carro->disponivel) && carro->chamada != NULL && carro->prisao_and){
 
@@ -62,6 +66,7 @@ void viatura_uso(viatura *&viaturas, pessoa *&pessoas){
 
                 if(p != NULL){
                     p->preso = true;
+                    p->chamada = carro->chamada;
                     cont++;
 
                 } else {
@@ -76,10 +81,24 @@ void viatura_uso(viatura *&viaturas, pessoa *&pessoas){
                 scanf("%d", &op2);
 
                 if(op2 == 1){
-                    (carro->chamada)->concluida = true;
+                    chamada *chama = carro->chamada;
+                    chama->concluida = true;
+
+                    for(viatura *v = viaturas; v != NULL; v = v->prox){
+                        if(v->chamada != NULL){
+                            if((v->chamada)->reforco == chama){
+                                (v->chamada)->concluida = true;
+                                v->chamada = NULL;
+                                v->atd_reforco = false;
+                                v->prisao_and = false;
+                                v->q_chamadas += 1;
+                            }
+                        }
+                    }
+
                     carro->chamada = NULL;
-                    carro->q_chamadas += 1;
                     carro->prisao_and = false;
+                    carro->q_chamadas += 1;
                 }
 
             }while(op2 != 1 && op2 != 2);

@@ -2,7 +2,7 @@
 #include "spm_functions.h"
 
 //Função que adiciona uma chamada na última posição da lista
-void enfileirar_chamada(chamada *&begin, chamada *&end, int t_pol, int prio, char descricao[], char local[]){
+void enfileirar_chamada(chamada *&begin, chamada *&end, int t_pol, int prio, char descricao[], char local[], chamada *r){
     chamada *novo;
 
     novo = (chamada*) calloc (1, sizeof(chamada));
@@ -11,6 +11,7 @@ void enfileirar_chamada(chamada *&begin, chamada *&end, int t_pol, int prio, cha
     strcpy(novo->descricao, descricao);
     strcpy(novo->localidade, local);
     novo->atribuida = false;
+    novo->reforco = r;
     novo->concluida = false;
     novo->prox = NULL;
 
@@ -70,25 +71,23 @@ viatura * pega_menor_q_chamada(viatura *viaturas, int t_pol){
     viatura *v = viaturas;
     viatura *min = viaturas;
     int t;
-
-    if(t_pol == 1)
-        min = v;
-    else
-        min = v->prox;
     
     while(v != NULL){
-        if(strcmp(v->tipo, "regular"))
-            t = 1;
-        else
-            t = 2;
 
-        if((v->q_chamadas <= min->q_chamadas) && !(v->disponivel) && (v->chamada == NULL))
-            min = v;
+        if((v->q_chamadas <= min->q_chamadas) && !(v->disponivel) && (v->chamada == NULL)){
+            if(strcmp(v->tipo, "regular") == 0 && t_pol == 1 || strcmp(v->tipo, "especializada") && t_pol == 2)
+                min = v;
+        }
 
         v = v->prox;
     }
 
-    if(!(min->disponivel) && min->chamada == NULL)
+    if(strcmp(min->tipo, "regular") == 0)
+        t = 1;
+    else
+        t = 2;
+
+    if(!(min->disponivel) && (min->chamada == NULL) && (t == t_pol))
         return min;
     else
         return NULL;
@@ -111,6 +110,7 @@ void distribuir_chamada(chamada *&chamadas_p, chamada *&chamadas_np, viatura *&v
             if(!(cp->atribuida)){
                 v->chamada = cp;
                 cp->atribuida = true;
+                strcpy(cp->cod, v->codigo);
                 printf("Chamada atribuída à viatura de código: %s\n", v->codigo);
             }
         }
@@ -129,6 +129,7 @@ void distribuir_chamada(chamada *&chamadas_p, chamada *&chamadas_np, viatura *&v
             if(!(cpn->atribuida)){
                 v->chamada = cpn;
                 cpn->atribuida = true;
+                strcpy(cpn->cod, v->codigo);
                 printf("Chamada atribuída à viatura de código: %s\n", v->codigo);
             }
         }
@@ -162,9 +163,9 @@ void menu_copom(chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada 
     scanf(" %[^\n]", local);
 
     if(prioridade == 1)
-        enfileirar_chamada(np_begin, np_end, t_pol, prioridade, descricao, local);
+        enfileirar_chamada(np_begin, np_end, t_pol, prioridade, descricao, local, NULL);
     else
-        enfileirar_chamada(p_begin, p_end, t_pol, prioridade, descricao, local);
+        enfileirar_chamada(p_begin, p_end, t_pol, prioridade, descricao, local, NULL);
 
     distribuir_chamada(p_begin, np_begin, viaturas);
 

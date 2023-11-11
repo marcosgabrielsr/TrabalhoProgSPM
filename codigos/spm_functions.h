@@ -22,11 +22,13 @@ struct chamada{
     int t_pol, prioridade;
     char descricao[MAX + 1];
     char localidade[MAX + 1];
+    char cod[4];
+    struct chamada *reforco;
     struct chamada *prox;
 };
 
 struct viatura{
-    bool disponivel, prisao_and;
+    bool disponivel, prisao_and, atd_reforco;
     int q_chamadas;
     struct chamada *chamada;
     char codigo[4];
@@ -44,6 +46,7 @@ struct pessoa{
     char nome[MAX + 1], cidade[MAX + 1], cpf[15];
     int idade;
     crime *pass, *inad;
+    struct chamada *chamada;
     struct pessoa *prox;
 };
 
@@ -99,6 +102,9 @@ void printf_pessoas(pessoa *lista);
 //Função de criptografia para senhas
 void criptografar(char word[]);
 
+//Função que adiciona uma chamada na última posição da lista
+void enfileirar_chamada(chamada *&begin, chamada *&end, int t_pol, int prio, char descricao[], char local[], chamada *r);
+
 //Função que remove a última chamada da lista
 void desenfileirar_chamada(chamada *&fila, chamada *&end);
 
@@ -118,13 +124,13 @@ policia *busca_policial(policia *&policiais, char nome_guerra[]);
 pessoa *busca_por_cpf(pessoa *pessoas, char cpf[]);
 
 //Função que apresenta o menu para ação policial em relação a uma chamada
-void ocorrencia(chamada *&chama, viatura *&v, pessoa *&pessoas);
+void ocorrencia(chamada *&chama, viatura *&v, viatura *&carros, pessoa *&pessoas, chamada *&r_begin, chamada *&r_end);
 
 //Função responsável pela funcionalidade de viatura em uso
-void viatura_uso(viatura *&viaturas, pessoa *&pessoas);
+void viatura_uso(viatura *&viaturas, pessoa *&pessoas, chamada *&r_begin, chamada *&r_end);
 
 //Função que imprime o menu viatura login e executa suas funcionalidades
-void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&chamada_p, chamada *&chamada_np);
+void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&chamada_p, chamada *&chamada_np, chamada *&r_begin, chamada *&r_end);
 
 /*--- Funções responsáveis pela execução do sistema --------------------------------------------------------------------------------------------*/
 
@@ -135,4 +141,4 @@ void iniciar_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais);
 void encerra_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end);
 
 //Função que imprime o menu principal na tela
-void menu_principal(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end);
+void menu_principal(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end, chamada *reforco_begin, chamada *&reforco_end);

@@ -166,7 +166,7 @@ void menu_copom(chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada 
     else
         enfileirar_chamada(p_begin, p_end, t_pol, prioridade, descricao, local);
 
-    distribuir_chamada(p_begin, p_end, viaturas);
+    distribuir_chamada(p_begin, np_begin, viaturas);
 
     printf("\n");
 }

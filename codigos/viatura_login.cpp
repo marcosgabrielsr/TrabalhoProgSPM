@@ -123,7 +123,7 @@ void ocorrencia(chamada *&chama, viatura *&v, pessoa *&pessoas){
 }
 
 //Função que imprime o menu viatura login e executa suas funcionalidades
-void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&chamada_p, chamada *&chamada_np, chamada *&reforco){
+void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&chamada_p, chamada *&chamada_np){
     char cod[4], nome_guerra[MAX + 1];
     int quant_pol, op = 0, cont = 0, tipo = 0;
     bool c = true, find = false;
@@ -250,11 +250,11 @@ void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, ch
                 }
             }
 
-            if(reforco != NULL){
-                chama = reforco;
+            // if(reforco != NULL){
+            //     chama = reforco;
 
                 
-            }
+            // }
 
             if(chamada_p == NULL && chamada_np == NULL || carro->chamada == NULL){
                 printf("\n====== SPM - Viatura em Modo Ronda ======\n");

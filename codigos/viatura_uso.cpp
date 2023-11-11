@@ -1,8 +1,30 @@
-//Aqui estão todas as funções referentes às viaturas
 #include "spm_functions.h"
 
+//Função que verifica se o código inserido existe
+bool verifica_codigo(char cod[], viatura *viaturas){
+    viatura *p = viaturas;
+
+    while(p != NULL){
+        if(strcmp(p->codigo, cod) == 0)
+            return true;
+        p = p->prox;
+    }
+
+    return false;
+}
+
+//função que busca o código da viatura
+viatura* busca_cod(char cod[], viatura *viaturas){
+    viatura *p = viaturas;
+
+    while(p != NULL && strcmp(p->codigo, cod) != 0)
+        p = p->prox;
+
+    return p;
+}
+
 //Função responsável pela funcionalidade de viatura em uso
-void viatura_uso(viatura *&viaturas){
+void viatura_uso(viatura *&viaturas, pessoa *&pessoas){
 
     char cod[4];
     viatura *carro = NULL;
@@ -10,18 +32,21 @@ void viatura_uso(viatura *&viaturas){
     printf("Insira o código da viatura: ");
     scanf("%s", cod);
 
-    carro = busca_viatura(viaturas, cod);
+    if (verifica_codigo(cod, viaturas)) {
 
-    if (carro == NULL)
-        printf("Código inválido, tente novamente! \n");
+        carro = busca_cod(cod, viaturas);
 
-    else if (carro->disponivel == true)
-        printf("Não foi embarcado");
+        printf("cod: %s", carro->codigo);
 
-    else if (carro->disponivel == false && carro->chamada == NULL)
-        printf("Viatura direcionada para rondas, no aguardo de chamadas policiais");
+        if (carro->disponivel == true)
+            printf("Não foi embarcado");
 
-    // else{
-        
-    // }
+        else if (carro->disponivel == false && carro->chamada == NULL)
+            printf("Viatura direcionada para rondas, no aguardo de chamadas policiais");
+
+        else if (!(carro->disponivel) && carro->chamada != NULL)
+            ocorrencia(carro->chamada, carro, pessoas);
+    }else
+        printf("Código inválido, tente novamente");
+
 }

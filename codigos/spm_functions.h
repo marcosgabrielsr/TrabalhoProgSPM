@@ -121,7 +121,7 @@ pessoa *busca_por_cpf(pessoa *pessoas, char cpf[]);
 void ocorrencia(chamada *&chama, viatura *&v, pessoa *&pessoas);
 
 //Função responsável pela funcionalidade de viatura em uso
-void viatura_uso(viatura *&viaturas);
+void viatura_uso(viatura *&viaturas, pessoa *&pessoas);
 
 //Função que imprime o menu viatura login e executa suas funcionalidades
 void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&chamada_p, chamada *&chamada_np);

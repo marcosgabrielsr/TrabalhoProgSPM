@@ -42,16 +42,6 @@ void conta_viaturas(viatura *viaturas, policia *pms, int &q_v, int &q_p){
     }
 }
 
-void gerar_relatorio(viatura *viaturas, policia *pms){
-    int q_v = 0;
-    int q_p = 0;
-
-    conta_viaturas(viaturas, pms, q_v, q_p);
-
-    printf("q_v: %d\n", q_v);
-    printf("q_p: %d\n", q_p);
-}
-
 //Função que imprime no terminal o menu de opções do oficial
 void menu_oficial(boletim *&bos, viatura *&viaturas, policia *&policiais){
     int op, op2;
@@ -68,7 +58,7 @@ void menu_oficial(boletim *&bos, viatura *&viaturas, policia *&policiais){
 
     pm = verifica_login(policiais, nome_guerra, senha);
 
-    if(strcmp(pm->cargo, "Oficial") != 0)
+    if(pm != NULL || strcmp(pm->cargo, "Oficial") != 0)
         printf("Login Inválido. Oficial não Encontrado!\n");
     
     else{

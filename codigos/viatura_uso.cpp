@@ -95,6 +95,11 @@ void viatura_uso(viatura *&viaturas, pessoa *&pessoas, chamada *&r_begin, chamad
                         }
                     }
 
+                    for(chamada *c = r_begin; c != NULL; c = c->prox){
+                        if(!(c->concluida) && (c->reforco) == chama)
+                            c->concluida = true;
+                    }
+
                     carro->chamada = NULL;
                     carro->prisao_and = false;
                     carro->q_chamadas += 1;

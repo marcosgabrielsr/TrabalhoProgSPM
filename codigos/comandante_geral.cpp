@@ -20,56 +20,63 @@ void oficio_ocorrencia(chamada *p_chamadas, chamada *np_chamadas, pessoa *pessoa
         while(chama_p != NULL){
             if(chama_p->concluida){
 
-                fprintf(c, "%s", "Tipo Policia: ");
+                fprintf(c, "%s", "       Tipo Policia: ");
                 (chama_p->t_pol == 1) ? fprintf(c, "%s\n", "Regular."): fprintf(c, "%s\n", "Especializada.");
 
-                fprintf(c, "Descricao: %s - %s.\n", chama_p->descricao, chama_p->localidade);
-                fprintf(c, "Policiais:\n");
+                fprintf(c, "        Descricao: %s - %s.\n", chama_p->descricao, chama_p->localidade);
+                fprintf(c, "        Policiais:\n");
 
                 while(pm != NULL){
 
                     if(strcmp(pm->cod_viat, chama_p->cod) == 0)
-                        fprintf(c, "- %s;\n", pm->nome_guerra);
+                        fprintf(c, "            - %s;\n", pm->nome_guerra);
                     pm = pm->prox;
                 }
 
-                fprintf(c, "Presos:\n");
+                fprintf(c, "        Presos:\n");
 
                 while(p != NULL){
 
                     if(p->chamada == chama_p)
-                        fprintf(c, "- %s, %s;\n", p->nome, p->cpf);
+                        fprintf(c, "            - %s, %s;\n", p->nome, p->cpf);
                     p = p->prox;
                 }
+
+                printf("\n");
             }
 
             chama_p = chama_p->prox;
         } 
 
+        pm = policiais;
+        p = pessoas;
+
         while(chama_np != NULL){
             if(chama_np->concluida){
 
-                fprintf(c, "%s", "Tipo Policia: ");
+                fprintf(c, "%s", "       Tipo Policia: ");
                 (chama_np->t_pol == 1) ? fprintf(c, "%s\n", "Regular."): fprintf(c, "%s\n", "Especializada.");
 
-                fprintf(c, "Descricao: %s - %s.\n", chama_np->descricao, chama_np->localidade);
-                fprintf(c, "Policiais:\n");
+                fprintf(c, "        Descricao: %s - %s.\n", chama_np->descricao, chama_np->localidade);
+                fprintf(c, "        Policiais:\n");
 
                 while(pm != NULL){
 
                     if(strcmp(pm->cod_viat, chama_np->cod) == 0)
-                        fprintf(c, "- %s;\n", pm->nome_guerra);
+                        fprintf(c, "            - %s;\n", pm->nome_guerra);
                     pm = pm->prox;
                 }
 
-                fprintf(c, "Presos:\n");
+                fprintf(c, "        Presos:\n");
 
                 while(p != NULL){
 
                     if(p->chamada == chama_np)
-                        fprintf(c, "- %s, %s;\n", p->nome, p->cpf);
+                        fprintf(c, "            - %s, %s;\n", p->nome, p->cpf);
                     p = p->prox;
                 }
+
+                printf("\n");
             }
 
             chama_np = chama_np->prox;
@@ -99,7 +106,6 @@ void comand_geral(policia *&policiais, pessoa *&pessoas, chamada *&chamadas_p, c
     comandante = verifica_login(policiais, nome_guerra, senha);
 
     if(comandante != NULL){
-        printf("%s\n", comandante->cargo);
         if (strcmp(comandante->cargo, "Comandante Geral") == 0){
             printf("Gerando ofício...\n");
             oficio_ocorrencia(chamadas_p, chamadas_np, pessoas, policiais);

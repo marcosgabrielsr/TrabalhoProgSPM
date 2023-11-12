@@ -122,6 +122,11 @@ void ocorrencia(chamada *&c, viatura *&v, viatura *&carros, pessoa *&pessoas, ch
                             }
                         }
 
+                        for(chamada *chama = r_begin; chama != NULL; chama = chama->prox){
+                            if(!(chama->concluida) && (chama->reforco) == c)
+                                chama->concluida = true;
+                        }
+
                         v->chamada = NULL;
                         v->q_chamadas += 1;
                         v->prisao_and = false;
@@ -148,7 +153,7 @@ void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, ch
     printf("====== SPM - Viatura Login ======\n");
 
     do{
-        printf("Polícia (1 - regular / 2 - expecializada): ");
+        printf("Polícia (1 - regular / 2 - especializada): ");
         scanf("%d", &tipo);
         if(tipo != 1 && tipo != 2) printf("Código inválido, tente novamente! \n");
 

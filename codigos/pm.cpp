@@ -29,7 +29,7 @@ void remove_boletim(boletim *&bo){
     if(b == bo)
         bo = NULL;
     else
-        q = NULL;
+        q->prox = NULL;
     
     free(b);
 }
@@ -105,7 +105,9 @@ void update_boletim(boletim *bos){
     FILE *bo = NULL;
     boletim *b = bos;
 
-    bo = fopen("arquivos_saida/boletim.txt", "w");
+    bo = fopen("arquivos_saida/boletim.txt", "a");
+
+    fscanf(bo, "\n");
 
     while(b != NULL){
         if(b->prox != NULL)

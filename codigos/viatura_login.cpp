@@ -148,14 +148,14 @@ void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, ch
     printf("====== SPM - Viatura Login ======\n");
 
     do{
-        printf("\nPolícia (1 - regular / 2 - expecializada): ");
+        printf("Polícia (1 - regular / 2 - expecializada): ");
         scanf("%d", &tipo);
         if(tipo != 1 && tipo != 2) printf("Código inválido, tente novamente! \n");
 
     }while(tipo != 1 && tipo != 2);
 
     do{
-        printf("\nCódigo da Viatura: ");
+        printf("Código da Viatura: ");
         scanf("%s", cod);
 
         carro = busca_viatura(viaturas, cod);
@@ -175,7 +175,7 @@ void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, ch
 
     c = true;
     do{
-        printf("\nQuantidade de PMs: ");
+        printf("Quantidade de PMs: ");
         scanf("%d", &quant_pol);
 
         if(tipo == 1){
@@ -192,7 +192,7 @@ void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, ch
 
     }while(c);
 
-    printf("\nIdentificação dos PMs: ");
+    printf("Identificação dos PMs: ");
     while(cont < quant_pol){
         printf("\nNome Guerra: ");
         scanf("%s", nome_guerra);
@@ -200,7 +200,7 @@ void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, ch
         pm = busca_policial(policiais, nome_guerra);
 
         if(pm == NULL)
-            printf("O PM inserido não está disponível. Tente novamente!\n");
+            printf("O PM inserido não está disponível. Tente novamente!\n\n");
         else{
             strcpy(pm->cod_viat, cod);
             cont++;
@@ -267,9 +267,6 @@ void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, ch
                         chama = chama->prox;
                 }
             }
-
-            if(carro->chamada == NULL)
-                printf("A\n");
 
             if(r_begin != NULL && carro->chamada == NULL){
                 chama = r_begin;

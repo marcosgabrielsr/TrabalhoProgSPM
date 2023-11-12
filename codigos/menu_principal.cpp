@@ -30,7 +30,7 @@ void menu_principal(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, c
     do{
         printf("\n====== SPM - Funcionalidades ======\n");
         printf("1 - Viatura login\n");
-        printf("2 - Vitura em Uso\n");
+        printf("2 - Viatura em Uso\n");
         printf("3 - COPOM\n");
         printf("4 - Polícia Militar\n");
         printf("5 - Oficial\n");

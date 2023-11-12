@@ -23,7 +23,7 @@ int main(){
 
     menu_principal(pessoas, carros, policiais, p_begin, p_end, np_begin, np_end, reforco, end_reforco);
 
-    encerra_sistema(pessoas, carros, policiais, p_begin, p_end, np_begin, np_end);
+    encerra_sistema(pessoas, carros, policiais, p_begin, p_end, np_begin, np_end, reforco, end_reforco);
 
     return 0;
 }

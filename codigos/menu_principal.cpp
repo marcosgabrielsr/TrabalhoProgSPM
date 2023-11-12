@@ -9,7 +9,7 @@ void iniciar_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais){
 }
 
 //Função que limpa a memória alocada dinamicamente
-void encerra_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end){
+void encerra_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end, chamada *&r_begin, chamada *&r_end){
     while(pessoas != NULL) remove_pessoa(pessoas);
     while(viaturas != NULL) remove_viatura(viaturas);
     while(policiais != NULL) remove_policial(policiais);
@@ -17,6 +17,8 @@ void encerra_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, 
     while(p_begin != NULL) desenfileirar_chamada(p_begin, p_end);
 
     while(np_begin != NULL) desenfileirar_chamada(np_begin, np_end);
+
+    while(r_begin != NULL) desenfileirar_chamada(r_begin, r_end);
 
     if(p_begin != NULL || p_end != NULL)
         printf("Erro ao desalocar as chamadas\n");
@@ -52,6 +54,9 @@ void menu_principal(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, c
 
         else if(op == 3)
             menu_copom(p_begin, p_end, np_begin, np_end, viaturas);
+        
+        else if(op == 4)
+            pm_gera_boletim(policiais, p_begin, np_begin, r_begin);
 
     }while(op != 0);
 }

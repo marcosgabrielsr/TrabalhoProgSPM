@@ -16,9 +16,15 @@
 #include <string.h>
 
 #define MAX 100
+#define MAX_TEXT 4000
+
+struct boletim{
+    char texto[MAX_TEXT];
+    struct boletim *prox;
+};
 
 struct chamada{
-    bool concluida, atribuida;
+    bool concluida, atribuida, tem_bo;
     int t_pol, prioridade;
     char descricao[MAX + 1];
     char localidade[MAX + 1];
@@ -132,13 +138,16 @@ void viatura_uso(viatura *&viaturas, pessoa *&pessoas, chamada *&r_begin, chamad
 //Função que imprime o menu viatura login e executa suas funcionalidades
 void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&chamada_p, chamada *&chamada_np, chamada *&r_begin, chamada *&r_end);
 
+//Função responsável por gerar um boletim de ocorrência
+void pm_gera_boletim(policia *policiais, chamada *p_begin, chamada *np_begin, chamada *r_begin);
+
 /*--- Funções responsáveis pela execução do sistema --------------------------------------------------------------------------------------------*/
 
 //Função que inicializa o sistema pegando todos os dados dos arquivos e armazenando nas listas passadas por parâmetro
 void iniciar_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais);
 
 //Função que limpa a memória alocada dinamicamente
-void encerra_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end);
+void encerra_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end, chamada *&r_begin, chamada *&r_end);
 
 //Função que imprime o menu principal na tela
 void menu_principal(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end, chamada *reforco_begin, chamada *&reforco_end);

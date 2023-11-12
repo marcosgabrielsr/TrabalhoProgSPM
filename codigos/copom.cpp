@@ -11,6 +11,7 @@ void enfileirar_chamada(chamada *&begin, chamada *&end, int t_pol, int prio, cha
     strcpy(novo->descricao, descricao);
     strcpy(novo->localidade, local);
     novo->atribuida = false;
+    novo->tem_bo = false;
     novo->reforco = r;
     novo->concluida = false;
     novo->prox = NULL;

@@ -72,11 +72,14 @@ viatura * pega_menor_q_chamada(viatura *viaturas, int t_pol){
     viatura *v = viaturas;
     viatura *min = viaturas;
     int t;
-    
+
     while(v != NULL){
 
-        if((v->q_chamadas <= min->q_chamadas) && !(v->disponivel) && (v->chamada == NULL)){
-            if(strcmp(v->tipo, "regular") == 0 && t_pol == 1 || strcmp(v->tipo, "especializada") && t_pol == 2)
+        if(strcmp(v->tipo, "regular") == 0 && t_pol == 1 || strcmp(v->tipo, "especializada") == 0 && t_pol == 2){
+            if(min->disponivel && !(v->disponivel))
+                min = v;
+            
+            else if((v->q_chamadas <= min->q_chamadas) && !(v->disponivel) && (v->chamada == NULL))
                 min = v;
         }
 

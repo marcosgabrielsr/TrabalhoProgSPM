@@ -48,9 +48,8 @@ void viatura_uso(viatura *&viaturas, pessoa *&pessoas, chamada *&r_begin, chamad
         else if (carro->disponivel == false && carro->chamada == NULL)
             printf("Viatura direcionada para rondas, no aguardo de chamadas policiais\n");
 
-        else if (!(carro->disponivel) && carro->chamada != NULL && !(carro->prisao_and)){
+        else if (!(carro->disponivel) && carro->chamada != NULL && !(carro->prisao_and))
             ocorrencia(carro->chamada, carro, viaturas, pessoas, r_begin, r_end);
-        }
 
         else if (!(carro->disponivel) && carro->chamada != NULL && carro->prisao_and){
 

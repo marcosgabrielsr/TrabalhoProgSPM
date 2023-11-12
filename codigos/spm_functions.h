@@ -138,16 +138,22 @@ void viatura_uso(viatura *&viaturas, pessoa *&pessoas, chamada *&r_begin, chamad
 //Função que imprime o menu viatura login e executa suas funcionalidades
 void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&chamada_p, chamada *&chamada_np, chamada *&r_begin, chamada *&r_end);
 
+//Função que remove o último boletim do fim da lista
+void remove_boletim(boletim *&bo);
+
+//Função responsável por ler o arquivo boletim.txt
+void ler_boletim(boletim *&bos);
+
 //Função responsável por gerar um boletim de ocorrência
-void pm_gera_boletim(policia *policiais, chamada *p_begin, chamada *np_begin, chamada *r_begin);
+void pm_gera_boletim(policia *policiais, chamada *&p_begin, chamada *&np_begin, chamada *&r_begin, boletim *&bos);
 
 /*--- Funções responsáveis pela execução do sistema --------------------------------------------------------------------------------------------*/
 
 //Função que inicializa o sistema pegando todos os dados dos arquivos e armazenando nas listas passadas por parâmetro
-void iniciar_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais);
+void iniciar_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, boletim *&bos);
 
 //Função que limpa a memória alocada dinamicamente
-void encerra_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end, chamada *&r_begin, chamada *&r_end);
+void encerra_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end, chamada *&r_begin, chamada *&r_end, boletim *&bos);
 
 //Função que imprime o menu principal na tela
-void menu_principal(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end, chamada *reforco_begin, chamada *&reforco_end);
+void menu_principal(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end, chamada *reforco_begin, chamada *&reforco_end, boletim *&bos);

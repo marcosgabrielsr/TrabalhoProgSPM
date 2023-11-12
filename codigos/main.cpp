@@ -19,11 +19,14 @@ int main(){
     chamada *reforco = NULL;
     chamada *end_reforco = NULL;
 
-    iniciar_sistema(pessoas, carros, policiais);
+    //Ponteiro para uma lista simplesmente encadeada de boletim
+    boletim *bos = NULL; 
 
-    menu_principal(pessoas, carros, policiais, p_begin, p_end, np_begin, np_end, reforco, end_reforco);
+    iniciar_sistema(pessoas, carros, policiais, bos);
 
-    encerra_sistema(pessoas, carros, policiais, p_begin, p_end, np_begin, np_end, reforco, end_reforco);
+    menu_principal(pessoas, carros, policiais, p_begin, p_end, np_begin, np_end, reforco, end_reforco, bos);
+
+    encerra_sistema(pessoas, carros, policiais, p_begin, p_end, np_begin, np_end, reforco, end_reforco, bos);
 
     return 0;
 }

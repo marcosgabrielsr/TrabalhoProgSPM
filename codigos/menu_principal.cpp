@@ -2,14 +2,14 @@
 #include "spm_functions.h"
 
 //Função que inicializa o sistemas pegando todos os dados dos arquivos
-void iniciar_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais){
+void iniciar_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, boletim *&bos){
     ler_pessoas(pessoas);
     ler_viaturas(viaturas);
     ler_policiais(policiais);
 }
 
 //Função que limpa a memória alocada dinamicamente
-void encerra_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end, chamada *&r_begin, chamada *&r_end){
+void encerra_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end, chamada *&r_begin, chamada *&r_end, boletim *&bos){
     while(pessoas != NULL) remove_pessoa(pessoas);
     while(viaturas != NULL) remove_viatura(viaturas);
     while(policiais != NULL) remove_policial(policiais);
@@ -20,15 +20,11 @@ void encerra_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, 
 
     while(r_begin != NULL) desenfileirar_chamada(r_begin, r_end);
 
-    if(p_begin != NULL || p_end != NULL)
-        printf("Erro ao desalocar as chamadas\n");
-    
-    if(np_begin != NULL || np_end != NULL)
-        printf("Erro ao desalocar as chamadas\n");
+    while(bos != NULL) remove_boletim(bos);
 }
 
 //Função que imprime o menu principal na tela
-void menu_principal(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end, chamada *r_begin, chamada *&r_end){
+void menu_principal(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, chamada *&p_begin, chamada *&p_end, chamada *&np_begin, chamada *&np_end, chamada *r_begin, chamada *&r_end, boletim *&bos){
     int op;
 
     do{
@@ -56,7 +52,7 @@ void menu_principal(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, c
             menu_copom(p_begin, p_end, np_begin, np_end, viaturas);
         
         else if(op == 4)
-            pm_gera_boletim(policiais, p_begin, np_begin, r_begin);
+            pm_gera_boletim(policiais, p_begin, np_begin, r_begin, bos);
 
     }while(op != 0);
 }

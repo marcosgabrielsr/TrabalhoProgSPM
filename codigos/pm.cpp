@@ -2,11 +2,12 @@
 #include "spm_functions.h"
 
 //Função que adiciona no fim um novo item à lista de boletins
-void add_boletim(boletim *&bo, char text[]){
+void add_boletim(boletim *&bo, char text[], chamada *c_origem){
     boletim *b = bo, *novo;
 
     novo = (boletim*) calloc (1, sizeof(boletim));
     strcpy(novo->texto, text);
+    novo->c_origem = c_origem;
     novo->prox = NULL;
 
     if(bo == NULL)
@@ -81,25 +82,6 @@ policia *verifica_login(policia *&pms, char nome_guerra[], char senha[]){
     return NULL;
 }
 
-void ler_boletim(boletim *&bos){
-    FILE *bo = NULL;
-    char text[MAX_TEXT];
-
-    bo = fopen("arquivos_saida/boletim.txt", "r");
-
-    if(bo == NULL)
-        printf("Erro ao abrir o boletim.txt\n");
-    else{
-        while(feof(bo) == 0){
-            fscanf(bo, " %[^\n]", text);
-
-            add_boletim(bos, text);
-        }
-
-        fclose(bo);
-    }
-}
-
 //Função que atualiza o arquivo txt que armazena os boletins
 void update_boletim(boletim *bos){
     FILE *bo = NULL;
@@ -162,9 +144,7 @@ void pm_gera_boletim(policia *policiais, chamada *&p_begin, chamada *&np_begin, 
                         printf("Insira o texto: ");
                         scanf(" %[^\n]", texto);
 
-                        add_boletim(bos, texto);
-
-                        update_boletim(bos);
+                        add_boletim(bos, texto, c);
                     
                     } else if(op == 2)
                         continuar = false;
@@ -172,7 +152,7 @@ void pm_gera_boletim(policia *policiais, chamada *&p_begin, chamada *&np_begin, 
                 }while(op != 1 && op != 2);
             
             }else{
-                printf("Não há chamadas para realizar boletim!\n");
+                printf("Não há mais chamadas para realizar boletim!\n");
             }
 
         }while(c != NULL && continuar);

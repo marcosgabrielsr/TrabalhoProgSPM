@@ -20,6 +20,7 @@ void encerra_sistema(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, 
 
     while(r_begin != NULL) desenfileirar_chamada(r_begin, r_end);
 
+    update_boletim(bos);
     while(bos != NULL) remove_boletim(bos);
 }
 
@@ -53,6 +54,12 @@ void menu_principal(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, c
         
         else if(op == 4)
             pm_gera_boletim(policiais, p_begin, np_begin, r_begin, bos);
+
+        else if(op == 5)
+            menu_oficial(bos, viaturas, policiais);
+        
+        else if(op == 6)
+            comand_geral(policiais, pessoas, p_begin, np_begin);
 
     }while(op != 0);
 }

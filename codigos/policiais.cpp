@@ -61,7 +61,7 @@ void ler_policiais(policia *&lista){
         while(feof(p) == 0){
             fscanf(p, " %[^\n]", nome);
             fscanf(p, "%s", cpf);
-            fscanf(p, "%s", nome_guerra);
+            fscanf(p, " %s", nome_guerra);
             fscanf(p, " %[^\n]", cidade);
             fscanf(p, "%d", &idade);
             fscanf(p, " %[^\n]", cargo);

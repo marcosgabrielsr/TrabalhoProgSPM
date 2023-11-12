@@ -20,6 +20,7 @@
 
 struct boletim{
     char texto[MAX_TEXT];
+    struct chamada *c_origem;
     struct boletim *prox;
 };
 
@@ -141,11 +142,20 @@ void viatura_login(pessoa *&pessoas, viatura *&viaturas, policia *&policiais, ch
 //Função que remove o último boletim do fim da lista
 void remove_boletim(boletim *&bo);
 
-//Função responsável por ler o arquivo boletim.txt
-void ler_boletim(boletim *&bos);
+//Função que atualiza o arquivo txt que armazena os boletins
+void update_boletim(boletim *bos);
+
+//Função que verifica login e retorna o ponteiro do pm caso o login esteja correto
+policia *verifica_login(policia *&pms, char nome_guerra[], char senha[]);
 
 //Função responsável por gerar um boletim de ocorrência
 void pm_gera_boletim(policia *policiais, chamada *&p_begin, chamada *&np_begin, chamada *&r_begin, boletim *&bos);
+
+//Função que imprime no terminal o menu de opções do oficial
+void menu_oficial(boletim *&bos, viatura *&viaturas, policia *&policiais);
+
+//Função responsável por verificar o login do comandante geral
+void comand_geral(policia *&policiais, pessoa *&pessoas, chamada *&chamadas_p, chamada *&chamadas_np);
 
 /*--- Funções responsáveis pela execução do sistema --------------------------------------------------------------------------------------------*/
 

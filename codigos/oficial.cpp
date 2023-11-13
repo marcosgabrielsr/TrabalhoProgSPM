@@ -58,7 +58,7 @@ void menu_oficial(boletim *&bos, viatura *&viaturas, policia *&policiais){
 
     pm = verifica_login(policiais, nome_guerra, senha);
 
-    if(pm != NULL || strcmp(pm->cargo, "Oficial") != 0)
+    if(pm == NULL || strcmp(pm->cargo, "Oficial") != 0)
         printf("Login Inválido. Oficial não Encontrado!\n");
     
     else{

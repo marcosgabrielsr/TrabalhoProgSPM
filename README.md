@@ -1,5 +1,5 @@
 **Autor**: Marcos Gabriel e Emily Flores<br>
-**Data da última atualização**: 16/10/2023 
+**Data da última atualização**: 17/11/2023 
 
 ## Descrição
 Este projeto é o nosso trabalho para a disciplina de Algoritmos de Programação 2. O principal intuito deste trabalho é utilizar estruturas de alocadição dinâmica como vetores, listas e filas para a criação de um sistema para a polícia militar, lembrando que esta idéia surgiu apenas para execução do trabalho e não foi um pedido oficial.
